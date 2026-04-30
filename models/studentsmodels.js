@@ -2,17 +2,37 @@ const mongoose = require('mongoose')
 
 const studentSchema = new mongoose.Schema({
     name : {type : String, required : true, minlength: 3, maxlength: 30},
-    USN : {type : String, required : true},
-    birthdate : {type : String, required : false},
-    PhoneNo : {type : String, required : false, minlength : 10, maxlength : 10},
+    USN : {type : String, required : true, unique : true},
+    birthdate : {type : Date, required : true},
+    email : {type: String, required : true, match : /.+\@.+\..+/},
+    phone : {type : String, required : true, minlength : 10, maxlength : 10},
     Branch : {type : String, required : true},
-    year: { type: Number, required: true },
+    year: {type: Number, required: true},
     CGPA : {type : Number, required : true},
-    resumeScore : {type : Number, required : true},
-    hackathons : {type : Number, required : true},
-    projects : {type : Number, required : true}
+    projects : [
+        {
+            title : String,
+            domain : String,
+            complexity : String,
+        }
+    ], //[] coz there can be multiple projects
+    skills : [String],
+    CPRating : [
+        {
+            platform: String,
+            rating : Number
+        }
+    ],
+    internships: [
+        {
+            role: String,
+            company: String,  
+            domain: String    
+        }
+    ],
+    resumeURL : {type : String, required : true}
 })
 
-const Student = new mongoose.model('Student', studentSchema)
+const Student = new mongoose.model('Student', studentSchema) //inside mongo Student -> students
 
 exports.Student = Student
