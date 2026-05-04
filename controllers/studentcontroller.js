@@ -91,8 +91,8 @@ const filterStudents = async (req,res) => {
 
         const allowedMetrics = [
             "CGPA",
-            "resumeScore",
-            "hackathons",
+            "CPRating",
+            "internships",
             "projects"
         ]
 
@@ -117,12 +117,28 @@ const filterStudents = async (req,res) => {
         }
 
         const students = await Student.find(query)
+
+        function getMetricsValue(student, key){
+            if(key === "CGPA"){
+                return student.CGPA
+            }
+            if(key === "CPRating"){
+                return student.CPRating.length ? Math.max(...student.CPRating.map(r => r.rating)) : 0 //... to spread the student.CPRating and map to create a new array where we got only rating values and r => r.rating is a form of arrow fn in JS, it means r => {return r.rating}
+            }
+            if(key === "projects"){
+                return student.projects.length
+            }
+            if(key === "internships"){
+                return student.internships.length
+            }
+        }
+
         const ranked = students.map(s => {
 
             let score = 0
 
             for(const key in weights){
-                score += (s[key] || 0) * weights[key]
+                score += getMetricsValue(s, key) * weights[key]
             }
 
             return {
