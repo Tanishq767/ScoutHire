@@ -30,7 +30,24 @@ const studentSchema = new mongoose.Schema({
             domain: String    
         }
     ],
-    resumeURL : {type : String, required : true}
+    resumeURL : {type : String, required : true},
+    OAResults: [
+        {
+            company: String,
+            score: Number
+        }
+    ],
+    interviewResults: [
+        {
+            company: String,
+            round: String,
+            score: Number
+        }
+    ],
+    activeBacklogs: {
+        type: Number,
+        default: 0
+    }
 })
 
 const Student = new mongoose.model('Student', studentSchema) //inside mongo Student -> students
