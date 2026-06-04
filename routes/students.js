@@ -6,15 +6,15 @@ const studentController = require('../controllers/studentcontroller')
 router.get('/', studentController.getStudent)
 
 router.post('/', 
-    studentController.createStudent); //creates a new resource
+    studentController.createStudent);
 
 router.get('/usn/:usn', studentController.getStudentbyUSN);
 
-router.post('/filter', studentController.filterStudents); // we use post here 
+router.post('/filter', studentController.filterStudents); 
 
-const upload = require('../middlewares/upload'); //imports the multer function from middleware
+const upload = require('../middlewares/upload'); 
 const {uploadStudents} = require('../controllers/studentcontroller'); 
 
-router.post('/upload', upload.single('file'), uploadStudents); //multer middleware runs first, finally, the file is attached to request (req.file)
+router.post('/upload', upload.single('file'), uploadStudents); 
 
 module.exports = router

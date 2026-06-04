@@ -49,13 +49,9 @@ function validateStudent(req, res, next){
 
     });
 
-    const { error } = schema.validate(req.body); //schema.validate(req.body) returns an object, usually stuff like value, error, etc enclosed inside a {} and we do validation only for specific routes, particularly those which create a student
+    const { error } = schema.validate(req.body);
 
-    if(error){
-        return res.status(400).send(error.details[0].message) //details is an error and usually has multiple error but joi validation stops at 1st error again usually, so we return only the first error be it password/email whatever
-    }
-
-    next(); //done here, move to the next middleware or route handler
+    next();
 }
 
 module.exports = validateStudent;

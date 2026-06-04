@@ -15,7 +15,7 @@ const studentSchema = new mongoose.Schema({
             domain : String,
             complexity : String,
         }
-    ], //[] coz there can be multiple projects
+    ],
     skills : [String],
     CPRating : [
         {
@@ -50,6 +50,6 @@ const studentSchema = new mongoose.Schema({
     }
 })
 
-const Student = new mongoose.model('Student', studentSchema) //inside mongo Student -> students
+const Student = new mongoose.model('Student', studentSchema) 
 
 exports.Student = Student

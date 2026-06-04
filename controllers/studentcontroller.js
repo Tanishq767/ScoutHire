@@ -47,7 +47,7 @@ const uploadStudents = async (req, res) => {
         } catch {
             return []
         }
-    }//if valid json, return it, else return empty array
+    }
 
     fs.createReadStream(req.file.path)
     .pipe(csv())
@@ -62,7 +62,7 @@ const uploadStudents = async (req, res) => {
             email: data.email,
             phone: String(data.phone),
             Branch: data.branch,
-            year: Number(data.year) || 0, //we dont wanna store NaN
+            year: Number(data.year) || 0,
             CGPA: Number(data.CGPA) || 0,
 
             skills: safeParse(data.skills),
