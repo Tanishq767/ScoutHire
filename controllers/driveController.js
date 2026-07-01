@@ -1,3 +1,6 @@
+const Drive = require('../models/driveModel')
+const Student = require('../models/studentsmodels')
+
 const getEligibleApplis = async(req,res) => {
 
     try{
@@ -9,17 +12,17 @@ const getEligibleApplis = async(req,res) => {
         }
 
         const Applicants = await Student.find({
-            USN : {$in : Drive.appliedStudents}
+            USN : {$in : drive.appliedStus}
         })
 
         const eligStus = Applicants.filter(student => {
                 if(student.CGPA < drive.minCGPA){
                     return false
                 }
-                if(!drive.allowedBranches.includes(student.branch)){
+                if(!drive.Branches.includes(student.branch)){
                     return false
                 }
-                if(student.activeBacklogs > drive.maxAllowedBacklogs){
+                if(student.activeBacklogs > drive.backlogsAllowed){
                     return false
                 }
                 return true;

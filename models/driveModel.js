@@ -1,7 +1,6 @@
 const mongoose = requrie('mongoose')
 
 const driveSchema = new mongoose.Schema({
-    driveId : String,
     companyName : String,
     role : [string],
     minCGPA : Number,
@@ -10,7 +9,12 @@ const driveSchema = new mongoose.Schema({
     backlogsAllowed : Boolean,
     OAWeight : Number,
     interviewWeight : Number,
-    appliedStus : [String]
+    appliedStus : [String],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Recruiter",
+        required: true
+    }
 })
 
 const Drive = mongoose.model('Drive' ,driveSchema)

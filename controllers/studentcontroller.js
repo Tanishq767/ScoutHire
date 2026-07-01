@@ -7,8 +7,16 @@ const createStudent = async(req,res) => {
         const student = new Student(req.body);
         await student.save();
         res.status(201).send(student);
+
     } catch (err){
-        res.status(400).send(err.message);
+        if(err.name == 'ValidationError'){
+            return res.status(400).send({error : "Bad Request", details: "is that a real student? idts! please send valid student data"})
+        }
+        if(err.code == 11000){
+            return res.status(400).send({error : "conflict", details : "Your email ID is quite in demand, it is taken!"})
+        }
+        console.error("System error details: ", err)
+        return res.status(500).send({error : "internal server error", message : "our servers are currently doing backflips, in the meantime go grab some coffee and be back to hit that submit again!"})
     }
 };
 
@@ -77,14 +85,16 @@ const uploadStudents = async (req, res) => {
         try{
             await Student.insertMany(results)
             fs.unlink(req.file.path, () => {})
+
             res.json({ message: "Students uploaded successfully" })
         } catch (err) {
             res.status(500).json({ error: err.message })
         }
     })
+
 }
 
-const filterStudents = async (req,res) => {
+const sortStudents = async (req,res) => {
     try{
 
         const { branches, weights, percent } = req.body
@@ -101,6 +111,7 @@ const filterStudents = async (req,res) => {
                 return res.status(400).send("Invalid metric in weights")
             }
         }
+
         let total = 0
         for(const key in weights){
             total += weights[key]
@@ -113,23 +124,38 @@ const filterStudents = async (req,res) => {
         let query = {}
 
         if(branches && !branches.includes("ALL")){
-            query.Branch = { $in: branches } //in is mongoose operator to find if students Branch is in branches.
+            query.Branch = { $in: branches }
         }
 
-        const students = await Student.find(query)
+        const students = await Student.find(query).lean()
+
+        const maxCGPA = Math.max(...students.map(s => s.CGPA))
+        const maxCPR = Math.max(...students.map((s) => {
+            return s.CPRating.length ? Math.max(...s.CPRating.map(cp => cp.rating)) : 0
+        }))
+        const maxProj = Math.max(...students.map(s => s.projects.length))
+        const maxInternships = Math.max(...students.map(s => s.internships.length))
 
         function getMetricsValue(student, key){
             if(key === "CGPA"){
-                return student.CGPA
+                return maxCGPA
+                    ? student.CGPA / maxCGPA
+                    : 0
             }
             if(key === "CPRating"){
-                return student.CPRating.length ? Math.max(...student.CPRating.map(r => r.rating)) : 0 //... to spread the student.CPRating and map to create a new array where we got only rating values and r => r.rating is a form of arrow fn in JS, it means r => {return r.rating}
+                return student.CPRating.length
+                    ? Math.max(...student.CPRating.map(r => r.rating)) / maxCPR
+                    : 0
             }
             if(key === "projects"){
-                return student.projects.length
+                return maxProj
+                    ? student.projects.length / maxProj
+                    : 0
             }
             if(key === "internships"){
-                return student.internships.length
+                return maxInternships
+                    ? student.internships.length / maxInternships
+                    : 0
             }
         }
 
@@ -142,7 +168,7 @@ const filterStudents = async (req,res) => {
             }
 
             return {
-                ...s._doc,
+                ...s,
                 score
             }
         })
@@ -165,5 +191,5 @@ module.exports = {
     getStudent,
     getStudentbyUSN,
     uploadStudents,
-    filterStudents,
+    sortStudents,
 };
