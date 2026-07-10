@@ -1,15 +1,3 @@
-const recruiterName =
-    localStorage.getItem("recruiterName");
-
-const companyName =
-    localStorage.getItem("companyName");
-
-if(!recruiterName){
-
-    window.location.href = "login.html";
-
-}
-
 document.getElementById("name").textContent =
     recruiterName;
 
