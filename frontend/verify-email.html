@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | Verify Email</title>
+
+    <link rel="stylesheet" href="css/register.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <img src="images/logo.png"
+             class="logo">
+
+        <h1>Verification Email Sent</h1>
+
+        <p class="subtitle">
+
+            We've sent a verification link to
+
+        </p>
+
+        <p id="emailText" class="email-address"></p>
+
+        <p class="subtitle">
+
+            Please check your inbox (and spam folder).
+
+            Click the verification link before logging in.
+
+        </p>
+
+        <button onclick="window.location.href='login.html'">
+
+            Go To Login
+
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("emailText").textContent =
+    sessionStorage.getItem("verificationEmail");
+
+</script>
+
+</body>
+</html>

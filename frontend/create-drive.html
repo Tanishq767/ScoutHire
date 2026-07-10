@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoutHire | Create Recruitment Drive</title>
+    <link rel="stylesheet" href="css/create-drive.css">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <a href="dashboard.html" class="backBtn">← Back to Dashboard</a>
+
+    <header class="pageHeader">
+        <h1>Create Recruitment Drive</h1>
+        <p>Create a new hiring opportunity for your organization.</p>
+    </header>
+
+    <form id="driveForm">
+        <section class="card">
+            <h2>Job Details</h2>
+            <div class="input-group">
+                <input type="text" id="jobTitle" required>
+                <label for="jobTitle">Job Title</label>
+            </div>
+            <div class="input-group">
+                <input type="number" id="package" step="0.1" required>
+                <label for="package">Package (LPA)</label>
+            </div>
+            <div class="input-group">
+                <input type="text" id="location" required>
+                <label for="location">Location</label>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Eligibility</h2>
+            <div class="input-group">
+                <input type="number" id="minimumCGPA" step="0.1" min="0" max="10" required>
+                <label for="minimumCGPA">Minimum CGPA</label>
+            </div>
+
+            <h3>Eligible Branches</h3>
+            <div class="checkboxGrid">
+                <label><input type="checkbox" class="branch" value="CSE"> CSE</label>
+                <label><input type="checkbox" class="branch" value="ISE"> ISE</label>
+                <label><input type="checkbox" class="branch" value="AIML"> AIML</label>
+                <label><input type="checkbox" class="branch" value="AIDS"> AIDS</label>
+                <label><input type="checkbox" class="branch" value="ECE"> ECE</label>
+                <label><input type="checkbox" class="branch" value="EEE"> EEE</label>
+                <label><input type="checkbox" class="branch" value="MECH"> Mechanical</label>
+                <label><input type="checkbox" class="branch" value="CIVIL"> Civil</label>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Requirements</h2>
+            <div class="input-group">
+                <input type="text" id="skills" placeholder="Java, SQL, Spring Boot, React">
+                <label for="skills">Skills</label>
+            </div>
+            <div class="input-group">
+                <input type="date" id="deadline" required>
+                <label for="deadline" class="dateLabel">Application Deadline</label>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Job Description</h2>
+            <textarea id="description" rows="7" placeholder="Describe the role, responsibilities, eligibility, selection process and other details..." required></textarea>
+        </section>
+
+        <button type="submit">Create Drive</button>
+    </form>
+</div>
+
+<script src="js/create-drive.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Eligible Students</title>
+
+    <link rel="stylesheet" href="css/eligible-students.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+
+    <a href="dashboard.html" class="backBtn"> <-- Dashboard </a>
+
+    <h1 id="jobTitle"></h1>
+
+    <p id="companyName"></p>
+
+    <div class="rankingPanel">
+
+        <div class="weights">
+
+            <div class="weightBox">
+                <label>CGPA Weight</label>
+                <input id="cgpaWeight" type="number" value="40">
+            </div>
+
+            <div class="weightBox">
+                <label>Projects Weight</label>
+                <input id="projectWeight" type="number" value="30">
+            </div>
+
+            <div class="weightBox">
+                <label>CP Rating Weight</label>
+                <input id="cpWeight" type="number" value="20">
+            </div>
+
+            <div class="weightBox">
+                <label>Internship Weight</label>
+                <input id="internshipWeight" type="number" value="10">
+            </div>
+        </div>
+
+        <div class="actionsRow">
+
+            <input id="topStudents" type="number" value="100" placeholder="Top Students">
+
+            <button id="rankBtn">
+                Generate Ranking
+            </button>
+
+            <button id="shortlistBtn">
+                Shortlist Selected
+            </button>
+
+            <button id="sendOABtn">
+                Send OA Invitations
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="topBar">
+
+        <h3>
+
+            Eligible Students
+
+            (<span id="matchCount">0</span>)
+
+        </h3>
+
+        <div class="filters">
+
+            <input
+                type="text"
+                id="search"
+                placeholder="Search student">
+
+            <select id="branchFilter">
+
+                <option value="ALL">
+
+                    All Branches
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+
+                    <input
+                        type="checkbox"
+                        id="selectAll">
+
+                </th>
+
+                <th>Rank</th>
+
+                <th>Score</th>
+
+                <th>Name</th>
+
+                <th>USN</th>
+
+                <th>Branch</th>
+
+                <th>CGPA</th>
+
+                <th>Resume</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="studentTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="js/eligible-students.js"></script>
+
+</body>
+
+</html>

@@ -69,7 +69,7 @@ const uploadStudents = async (req, res) => {
             birthdate: isNaN(date) ? null : date,
             email: data.email,
             phone: String(data.phone),
-            Branch: data.branch,
+            Branch: data.Branch,
             year: Number(data.year) || 0,
             CGPA: Number(data.CGPA) || 0,
 
@@ -94,102 +94,9 @@ const uploadStudents = async (req, res) => {
 
 }
 
-const sortStudents = async (req,res) => {
-    try{
-
-        const { branches, weights, percent } = req.body
-
-        const allowedMetrics = [
-            "CGPA",
-            "CPRating",
-            "internships",
-            "projects"
-        ]
-
-        for(const key in weights){
-            if(!allowedMetrics.includes(key)){
-                return res.status(400).send("Invalid metric in weights")
-            }
-        }
-
-        let total = 0
-        for(const key in weights){
-            total += weights[key]
-        }
-
-        for(const key in weights){
-            weights[key] = weights[key] / total
-        }
-
-        let query = {}
-
-        if(branches && !branches.includes("ALL")){
-            query.Branch = { $in: branches }
-        }
-
-        const students = await Student.find(query).lean()
-
-        const maxCGPA = Math.max(...students.map(s => s.CGPA))
-        const maxCPR = Math.max(...students.map((s) => {
-            return s.CPRating.length ? Math.max(...s.CPRating.map(cp => cp.rating)) : 0
-        }))
-        const maxProj = Math.max(...students.map(s => s.projects.length))
-        const maxInternships = Math.max(...students.map(s => s.internships.length))
-
-        function getMetricsValue(student, key){
-            if(key === "CGPA"){
-                return maxCGPA
-                    ? student.CGPA / maxCGPA
-                    : 0
-            }
-            if(key === "CPRating"){
-                return student.CPRating.length
-                    ? Math.max(...student.CPRating.map(r => r.rating)) / maxCPR
-                    : 0
-            }
-            if(key === "projects"){
-                return maxProj
-                    ? student.projects.length / maxProj
-                    : 0
-            }
-            if(key === "internships"){
-                return maxInternships
-                    ? student.internships.length / maxInternships
-                    : 0
-            }
-        }
-
-        const ranked = students.map(s => {
-
-            let score = 0
-
-            for(const key in weights){
-                score += getMetricsValue(s, key) * weights[key]
-            }
-
-            return {
-                ...s,
-                score
-            }
-        })
-
-        ranked.sort((a,b)=> b.score - a.score)
-
-        const count = Math.ceil(ranked.length * (percent / 100))
-
-        const result = ranked.slice(0, count)
-
-        res.send(result)
-
-    } catch(err){
-        res.status(500).send(err.message)
-    }
-}
-
 module.exports = {
     createStudent,
     getStudent,
     getStudentbyUSN,
     uploadStudents,
-    sortStudents,
 };

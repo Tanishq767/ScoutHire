@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | Drive Details</title>
+
+    <link rel="stylesheet" href="css/drive-details.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="dashboard.html" class="backBtn">
+
+        ← Back to Dashboard
+
+    </a>
+
+    <div class="card">
+
+        <h1 id="jobTitle"></h1>
+
+        <p id="companyName"></p>
+
+        <div class="details">
+
+            <p><b>Package:</b> <span id="package"></span></p>
+
+            <p><b>Location:</b> <span id="location"></span></p>
+
+            <p><b>Minimum CGPA:</b> <span id="cgpa"></span></p>
+
+            <p><b>Deadline:</b> <span id="deadline"></span></p>
+
+        </div>
+
+        <h3>Eligible Branches</h3>
+
+        <ul id="branches"></ul>
+
+        <h3>Required Skills</h3>
+
+        <ul id="skills"></ul>
+
+        <h3>Job Description</h3>
+
+        <p id="description"></p>
+
+        <button id="eligibleBtn">
+
+            Find Eligible Students
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/drive-details.js"></script>
+
+</body>
+
+</html>

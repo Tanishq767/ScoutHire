@@ -1,0 +1,251 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:#F5F7FB;
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+.sidebar{
+
+    width:260px;
+
+    background:#111827;
+
+    color:white;
+
+    padding:35px 25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.sidebar h2{
+
+    margin-bottom:45px;
+
+    color:#6366F1;
+
+    font-size:1.9rem;
+
+}
+
+.sidebar a{
+
+    text-decoration:none;
+
+    color:#D1D5DB;
+
+    margin-bottom:22px;
+
+    font-size:1rem;
+
+    transition:.25s;
+
+}
+
+.sidebar a:hover{
+
+    color:white;
+
+    transform:translateX(6px);
+
+}
+
+.main{
+
+    flex:1;
+
+    padding:45px;
+
+}
+
+.topbar{
+
+    margin-bottom:40px;
+
+}
+
+.topbar h1{
+
+    font-size:2.2rem;
+
+    color:#111827;
+
+}
+
+.topbar p{
+
+    color:#6B7280;
+
+    margin-top:8px;
+
+    font-size:1rem;
+
+}
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+
+    margin-bottom:40px;
+
+}
+
+.card{
+
+    background:white;
+
+    padding:28px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.card h3{
+
+    color:#6B7280;
+
+    margin-bottom:15px;
+
+}
+
+.card p{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#4F46E5;
+
+}
+
+.actions{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-bottom:40px;
+
+}
+
+.actions button{
+
+    padding:15px 28px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#4F46E5;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:1rem;
+
+    transition:.3s;
+
+}
+
+.actions button:hover{
+
+    background:#4338CA;
+
+}
+
+.activity{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+.activity h2{
+
+    margin-bottom:15px;
+
+    color:#111827;
+
+}
+
+.activity p{
+
+    color:#6B7280;
+
+}
+
+.driveCard{
+
+    border:1px solid #E5E7EB;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    margin-top:20px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.driveCard:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+    border-color:#6366F1;
+
+}
+
+.driveCard h3{
+
+    color:#111827;
+
+    margin-bottom:10px;
+
+}
+
+.driveCard p{
+
+    margin:6px 0;
+
+    color:#4B5563;
+
+}

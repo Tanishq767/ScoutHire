@@ -10,9 +10,7 @@ router.post('/',
 
 router.get('/usn/:usn', studentController.getStudentbyUSN);
 
-router.post('/filter', studentController.filterStudents); 
-
-const upload = require('../middlewares/upload'); 
+const upload = require('../middlewares/upload');      
 const {uploadStudents} = require('../controllers/studentcontroller'); 
 
 router.post('/upload', upload.single('file'), uploadStudents); 

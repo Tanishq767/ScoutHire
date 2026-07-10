@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire Dashboard</title>
+
+    <link rel="stylesheet"
+          href="css/dashboard.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>ScoutHire</h2>
+
+    <a href="#">Dashboard</a>
+
+    <a href="#">Recruitment Drives</a>
+
+    <a href="#">Profile</a>
+
+    <a href="#" id="logoutBtn"> Logout</a>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+
+        <h1>
+
+            Welcome,
+
+            <span id="name"></span>
+
+            
+
+        </h1>
+
+        <p id="company"></p>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="card">
+
+            <h3>Active Drives</h3>
+
+            <p id="activeDrives">0</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Total Candidates</h3>
+
+            <p id="totalCandidates">0</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Students Hired</h3>
+
+            <p id="studentsHired">0</p>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+
+        <button id="createDrive">
+
+            + Create Drive
+
+        </button>
+
+        <button id="viewDrives">
+
+            View Drives
+
+        </button>
+
+    </div>
+
+    <div class="activity">
+
+        <h2>My Recruitment Drives</h2>
+
+        <div id="drivesContainer">
+
+            <p>No recruitment drives yet.</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

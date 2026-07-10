@@ -52,4 +52,4 @@ const studentSchema = new mongoose.Schema({
 
 const Student = new mongoose.model('Student', studentSchema) 
 
-exports.Student = Student
+module.exports = Student

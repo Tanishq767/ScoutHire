@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const sendVerificationEmail = async(email, verificationToken) => {
     const verificationLink = `http://localhost:3000/api/recruiters/verify/${verificationToken}`
-    transporter.sendMail({
+    await transporter.sendMail({
         from : process.env.EMAIL,
         to : email,
         subject: "Verify your Scout Hire account",
@@ -23,4 +23,31 @@ const sendVerificationEmail = async(email, verificationToken) => {
     })
 }
 
-module.exports = sendVerificationEmail
+const sendOAEmail = async(student, drive) => {
+
+    await transporter.sendMail({
+        from: process.env.EMAIL,
+        to: student.email,
+        
+        subject: `${drive.companyName} | Online Assessment Invitation`,
+        html: `
+        <h2>Congratulations ${student.name}!</h2>
+        <p>You have been shortlisted for the <b>Online Assessment</b> round.</p>
+        <hr>
+        <p><b>Company:</b> ${drive.companyName}</p>
+        <p><b>Role:</b> ${drive.jobTitle}</p>
+        <p><b>Package:</b> ${drive.packageLPA} LPA</p>
+        <p><b>Location:</b> ${drive.location}</p>
+        <br>
+        <p>Our recruitment team will contact you with the assessment link shortly.</p>
+        <p>Best of luck!</p>
+        <br>
+        <p>${drive.companyName} Recruitment Team</p>
+        `
+    });
+}
+
+module.exports = {
+    sendVerificationEmail,
+    sendOAEmail
+}
