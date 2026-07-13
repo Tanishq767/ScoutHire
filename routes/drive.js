@@ -16,4 +16,6 @@ router.post("/:id/shortlist", authenticateRecruiter, driveController.shortlistSt
 
 router.post("/:id/send-oa", authenticateRecruiter, driveController.sendOAEmails);
 
+router.delete("/:id", authenticateRecruiter, driveController.deleteDrive);
+
 module.exports = router

@@ -45,20 +45,10 @@ loginForm.addEventListener("submit", async (e) => {
 
         }
 
-        localStorage.setItem(
-            "token",
-            data.token
-        );
-
-        localStorage.setItem(
-            "recruiterName",
-            data.recruiter.recruiterName
-        );
-
-        localStorage.setItem(
-            "companyName",
-            data.recruiter.companyName
-        );
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("recruiterName", data.recruiter.recruiterName);
+        localStorage.setItem("companyName", data.recruiter.companyName);
+        localStorage.setItem("email", data.recruiter.email);
 
         window.location.href = "dashboard.html";
 

@@ -80,7 +80,45 @@ async function loadDrive(){
 
 }
 
+async function deleteDrive() {
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this recruitment drive?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/drives/${driveId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        alert(data.message);
+
+        if (response.ok) {
+            window.location.href = "recruitment-drives.html";
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 loadDrive();
+
+document.getElementById("deleteDriveBtn")
+.addEventListener("click", deleteDrive);
 
 document.getElementById("eligibleBtn").addEventListener("click", () => {
 

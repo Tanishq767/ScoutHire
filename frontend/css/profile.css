@@ -1,0 +1,96 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#F5F7FB;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    margin:50px auto;
+}
+
+.backBtn{
+    display:inline-block;
+    margin-bottom:25px;
+    text-decoration:none;
+    color:#4F46E5;
+    font-weight:600;
+}
+
+.profileCard{
+    background:white;
+    border-radius:18px;
+    padding:40px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    text-align:center;
+}
+
+.avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#4F46E5;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:2rem;
+    font-weight:700;
+    margin:0 auto 20px;
+}
+
+.profileCard h2{
+    color:#111827;
+    margin-bottom:8px;
+}
+
+.company{
+    color:#6B7280;
+    margin-bottom:35px;
+}
+
+.info{
+    margin-bottom:35px;
+}
+
+.infoRow{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.infoRow span:first-child{
+    color:#6B7280;
+    font-weight:500;
+}
+
+.infoRow span:last-child{
+    color:#111827;
+    font-weight:600;
+}
+
+.verified{
+    color:#16A34A;
+}
+
+#logoutBtn{
+    padding:14px 28px;
+    border:none;
+    border-radius:10px;
+    background:#DC2626;
+    color:white;
+    cursor:pointer;
+    font-size:1rem;
+    transition:.25s;
+}
+
+#logoutBtn:hover{
+    background:#B91C1C;
+}

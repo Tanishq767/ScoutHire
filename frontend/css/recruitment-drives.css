@@ -1,0 +1,107 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#F5F7FB;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:40px auto;
+}
+
+.backBtn{
+    display:inline-block;
+    text-decoration:none;
+    color:#4F46E5;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.topActions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topActions h2{
+    color:#111827;
+    font-size:2rem;
+}
+
+.topActions button{
+    padding:14px 24px;
+    border:none;
+    border-radius:10px;
+    background:#4F46E5;
+    color:white;
+    cursor:pointer;
+    font-size:1rem;
+    transition:.25s;
+}
+
+.topActions button:hover{
+    background:#4338CA;
+}
+
+.activity{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.driveCard{
+    background:white;
+    border:1px solid #E5E7EB;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.driveCard:hover{
+    transform:translateY(-5px);
+    border-color:#6366F1;
+    box-shadow:0 12px 24px rgba(0,0,0,.08);
+}
+
+.driveCard h3{
+    color:#111827;
+    margin-bottom:12px;
+    font-size:1.3rem;
+}
+
+.driveCard p{
+    margin:8px 0;
+    color:#4B5563;
+    font-size:.96rem;
+}
+
+.statusOpen{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    background:#DCFCE7;
+    color:#15803D;
+    font-size:.85rem;
+    font-weight:600;
+}
+
+.statusClosed{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    background:#FEE2E2;
+    color:#B91C1C;
+    font-size:.85rem;
+    font-weight:600;
+}

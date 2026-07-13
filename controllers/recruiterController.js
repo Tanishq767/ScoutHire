@@ -202,7 +202,9 @@ const loginRecruiter = async (req, res) => {
 
                 recruiterName: recruiter.recruiterName,
 
-                companyName: recruiter.companyName
+                companyName: recruiter.companyName,
+
+                email: recruiter.email
 
             }
 

@@ -269,8 +269,9 @@ const shortlistStudents = async(req,res)=>{
         drive.shortlistedStudents = students;
         await drive.save();
         res.status(200).json({
-            message:"Students shortlisted successfully."
+            message:"Students shortlisted successfully.",
         });
+
     }
     catch(err){
         res.status(500).json({
@@ -320,6 +321,30 @@ const sendOAEmails = async(req,res)=>{
     }
 }
 
+const deleteDrive = async (req, res) => {
+    try {
+        const drive = await Drive.findOneAndDelete({
+            _id: req.params.id,
+            createdBy: req.recruiter._id
+        });
+
+        if (!drive) {
+            return res.status(404).json({
+                message: "Drive not found."
+            });
+        }
+
+        res.status(200).json({
+            message: "Drive deleted successfully."
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+}
+
 module.exports = {
     getEligibleApplis,
     createDrive,
@@ -327,5 +352,6 @@ module.exports = {
     getDriveById,
     rankEligibleStudents,
     shortlistStudents,
-    sendOAEmails
+    sendOAEmails,
+    deleteDrive
 }
