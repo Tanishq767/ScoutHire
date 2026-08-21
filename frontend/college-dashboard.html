@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | College Dashboard</title>
+
+    <link rel="stylesheet"
+          href="css/college-dashboard.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="brand">
+            ScoutHire
+        </div>
+
+        <a href="college-dashboard.html"
+           class="active">
+            Dashboard
+        </a>
+
+        <a href="college-companies.html">
+            Companies
+        </a>
+
+        <a href="college-students.html">
+            Students
+        </a>
+
+        <a href="college-drives.html">
+            Recruitment Drives
+        </a>
+
+        <a href="college-profile.html">
+            Profile
+        </a>
+
+        <a href="#"
+           id="logoutBtn">
+            Logout
+        </a>
+
+    </div>
+
+
+    <main class="main">
+
+        <header class="pageHeader">
+
+            <div>
+
+                <p class="eyebrow">
+                    College Placement Portal
+                </p>
+
+                <h1 id="collegeName">
+                    College Dashboard
+                </h1>
+
+                <p>
+                    Manage companies, students and campus recruitment.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <section class="statsGrid">
+
+            <div class="statCard">
+
+                <div class="statIcon">
+                    🏢
+                </div>
+
+                <div>
+
+                    <span>
+                        Approved Companies
+                    </span>
+
+                    <strong id="companyCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <div class="statIcon">
+                    🎓
+                </div>
+
+                <div>
+
+                    <span>
+                        Students
+                    </span>
+
+                    <strong id="studentCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <div class="statIcon">
+                    💼
+                </div>
+
+                <div>
+
+                    <span>
+                        Recruitment Drives
+                    </span>
+
+                    <strong id="driveCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="statCard">
+
+                <div class="statIcon">
+                    ⏳
+                </div>
+
+                <div>
+
+                    <span>
+                        Pending Approvals
+                    </span>
+
+                    <strong id="pendingCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="quickSection">
+
+            <div class="sectionTitle">
+
+                <div>
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                    <p>
+                        Manage your college recruitment ecosystem.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="actionGrid">
+
+                <a href="college-companies.html"
+                   class="actionCard">
+
+                    <div class="actionIcon">
+                        🏢
+                    </div>
+
+                    <h3>
+                        Manage Companies
+                    </h3>
+
+                    <p>
+                        View companies registered on ScoutHire
+                        and approve companies for campus recruitment.
+                    </p>
+
+                    <span>
+                        Open Company Directory →
+                    </span>
+
+                </a>
+
+
+                <a href="college-students.html"
+                   class="actionCard">
+
+                    <div class="actionIcon">
+                        🎓
+                    </div>
+
+                    <h3>
+                        Manage Students
+                    </h3>
+
+                    <p>
+                        View students associated with your college
+                        and manage their recruitment profiles.
+                    </p>
+
+                    <span>
+                        View Students →
+                    </span>
+
+                </a>
+
+
+                <a href="college-drives.html"
+                   class="actionCard">
+
+                    <div class="actionIcon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Recruitment Drives
+                    </h3>
+
+                    <p>
+                        Review and approve recruitment drives
+                        created by companies for your college.
+                    </p>
+
+                    <span>
+                        Manage Drives →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="welcomeCard">
+
+            <div>
+
+                <p class="eyebrow">
+                    ScoutHire College Network
+                </p>
+
+                <h2>
+                    Connect your students with verified recruitment opportunities.
+                </h2>
+
+                <p>
+                    Approve companies that approach your institution,
+                    manage your student population and control which
+                    recruitment drives become available to your students.
+                </p>
+
+            </div>
+
+            <div class="welcomeIcon">
+                🎯
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/college-dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | Companies</title>
+
+    <link rel="stylesheet" href="css/college-companies.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="brand">
+            ScoutHire
+        </div>
+
+        <a href="college-dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="college-companies.html" class="active">
+            Companies
+        </a>
+
+        <a href="college-students.html">
+            Students
+        </a>
+
+        <a href="college-drives.html">
+            Recruitment Drives
+        </a>
+
+        <a href="college-profile.html">
+            Profile
+        </a>
+
+        <a href="#" id="logoutBtn">
+            Logout
+        </a>
+
+    </div>
+
+
+    <main class="main">
+
+        <div class="pageHeader">
+
+            <p class="eyebrow">
+                Company Network
+            </p>
+
+            <h1>
+                Companies
+            </h1>
+
+            <p>
+                Approve companies that are ready to recruit from your college.
+            </p>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input id="searchCompany" type="text" placeholder="Search companies...">
+
+
+            <select id="locationFilter">
+
+                <option value="ALL">
+                    All Locations
+                </option>
+
+            </select>
+
+
+            <select id="statusFilter">
+
+                <option value="ALL">
+                    All Statuses
+                </option>
+
+                <option value="Approved">
+                    Connected
+                </option>
+
+                <option value="Sent">
+                    Request Sent
+                </option>
+
+                <option value="Incoming">
+                    Incoming Request
+                </option>
+
+                <option value="Not Requested">
+                    Not Connected
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div id="companyList" class="companyGrid">
+
+            <p class="loading">
+                Loading companies...
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/college-companies.js"></script>
+
+</body>
+
+</html>

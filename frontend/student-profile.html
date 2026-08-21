@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | ScoutHire</title>
+    <link rel="stylesheet" href="css/student-profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>ScoutHire</h2>
+
+    <a href="student-dashboard.html">Dashboard</a>
+    <a href="#">My Applications</a>
+    <a href="student-profile.html">Profile</a>
+    <a href="#" id="logoutBtn">Logout</a>
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+        <h1>My Profile</h1>
+        <p>Manage your student profile and resume.</p>
+    </div>
+
+    <div class="profileGrid">
+
+        <div class="profileCard">
+
+            <h2>Student Information</h2>
+
+            <div class="infoRow">
+                <span>Name</span>
+                <strong id="studentName">-</strong>
+            </div>
+
+            <div class="infoRow">
+                <span>USN</span>
+                <strong id="studentUSN">-</strong>
+            </div>
+
+            <div class="infoRow">
+                <span>Email</span>
+                <strong id="studentEmail">-</strong>
+            </div>
+
+            <div class="infoRow">
+                <span>Branch</span>
+                <strong id="studentBranch">-</strong>
+            </div>
+
+            <div class="infoRow">
+                <span>CGPA</span>
+                <strong id="studentCGPA">-</strong>
+            </div>
+
+        </div>
+
+        <div class="profileCard">
+
+            <h2>My Resume</h2>
+
+            <p id="resumeStatus">
+                No resume uploaded yet.
+            </p>
+
+            <a
+                id="resumeLink"
+                href="#"
+                target="_blank"
+                class="viewResume"
+                style="display:none;"
+            >
+                View Current Resume
+            </a>
+
+            <form id="resumeForm">
+
+                <input
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf"
+                    required
+                >
+
+                <button type="submit">
+                    Upload Resume
+                </button>
+
+            </form>
+
+            <p class="resumeNote">
+                PDF only. Maximum file size: 5 MB.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/student-profile.js"></script>
+
+</body>
+</html>

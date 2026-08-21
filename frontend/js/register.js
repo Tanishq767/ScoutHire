@@ -12,7 +12,7 @@ registerForm.addEventListener("submit", async (e) => {
     const confirmPassword = document.getElementById("confirmPassword").value;
 
     if(password !== confirmPassword){
-        alert("Passwords do not match.");
+        alert("Password and confim Password do not match.");
         return;
     }
 
@@ -39,11 +39,8 @@ registerForm.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         if(!response.ok){
-
             alert(data.message || "Registration failed.");
-
             return;
-
         }
 
         sessionStorage.setItem(
@@ -52,15 +49,10 @@ registerForm.addEventListener("submit", async (e) => {
         );
 
         window.location.href="verify-email.html";
-
     }
 
     catch(err){
-
         console.error(err);
-
         alert("Could not connect to server.");
-
     }
-
 });

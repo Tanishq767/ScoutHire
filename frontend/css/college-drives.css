@@ -1,0 +1,337 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(79,70,229,.18),
+            transparent 35%
+        ),
+        #F8FAFC;
+
+    color:#111827;
+
+}
+
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:250px;
+    height:100vh;
+
+    background:#111827;
+
+    padding:35px 20px;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+.brand{
+
+    color:#4F46E5;
+
+    font-size:1.8rem;
+
+    font-weight:700;
+
+    padding:0 15px;
+
+    margin-bottom:45px;
+
+}
+
+
+.sidebar a{
+
+    color:#D1D5DB;
+
+    text-decoration:none;
+
+    padding:14px 16px;
+
+    border-radius:10px;
+
+    margin-bottom:8px;
+
+}
+
+
+.sidebar a:hover{
+
+    background:#1F2937;
+
+    color:white;
+
+}
+
+
+.sidebar a.active{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    color:white;
+
+}
+
+
+.main{
+
+    margin-left:250px;
+
+    padding:45px 6% 70px;
+
+}
+
+
+.pageHeader{
+
+    margin-bottom:35px;
+
+}
+
+
+.eyebrow{
+
+    color:#4F46E5;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+}
+
+
+.pageHeader h1{
+
+    font-size:2.4rem;
+
+    margin:7px 0;
+
+}
+
+
+.pageHeader p:last-child{
+
+    color:#6B7280;
+
+}
+
+
+.driveGrid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:25px;
+
+}
+
+
+.driveCard{
+
+    background:white;
+
+    padding:28px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.06);
+
+}
+
+
+.driveCard h2{
+
+    font-size:1.25rem;
+
+    margin-bottom:5px;
+
+}
+
+
+.companyName{
+
+    color:#4F46E5;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+}
+
+
+.driveInfo{
+
+    display:grid;
+
+    gap:8px;
+
+    margin-bottom:22px;
+
+}
+
+
+.driveInfo span{
+
+    color:#6B7280;
+
+    font-size:.88rem;
+
+}
+
+
+.status{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:.76rem;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+}
+
+
+.status.pending{
+
+    background:#FEF3C7;
+
+    color:#92400E;
+
+}
+
+
+.status.approved{
+
+    background:#DCFCE7;
+
+    color:#166534;
+
+}
+
+
+.status.rejected{
+
+    background:#FEE2E2;
+
+    color:#991B1B;
+
+}
+
+
+.approveBtn{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    font-family:'Poppins',sans-serif;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+.approveBtn:disabled{
+
+    background:#D1D5DB;
+
+    cursor:not-allowed;
+
+}
+
+
+.loading{
+
+    color:#6B7280;
+
+}
+
+
+@media(max-width:1000px){
+
+    .driveGrid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        padding:30px 20px;
+
+    }
+
+    .driveGrid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

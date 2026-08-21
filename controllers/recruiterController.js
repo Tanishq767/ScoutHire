@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const Recruiter = require("../models/recruiterModel");
-const {sendVerificationEmail} = require("../utils/mailSender");
+const { sendVerificationEmail } = require("../utils/mailSender");
 const jwt = require("jsonwebtoken");
+const Company = require("../models/companyModel");
 
 const registerRecruiter = async (req, res) => {
 
@@ -27,22 +28,55 @@ const registerRecruiter = async (req, res) => {
             console.log("Existing recruiter found");
 
             if (existingRecruiter.verified) {
+
                 return res.status(400).json({
                     message: "Recruiter already exists"
                 });
+
             }
 
             if (existingRecruiter.verificationTokenExpiry < Date.now()) {
 
-                console.log("Verification link expired. Updating recruiter...");
+                console.log(
+                    "Verification link expired. Updating recruiter..."
+                );
 
-                existingRecruiter.recruiterName = recruiterName;
-                existingRecruiter.companyName = companyName;
-                existingRecruiter.email = email;
-                existingRecruiter.password = hashedPassword;
+                let company = await Company.findOne({
+                    companyName: companyName.trim()
+                });
 
-                existingRecruiter.verificationToken = verificationToken;
-                existingRecruiter.verificationTokenExpiry = verificationTokenExpiry;
+                if (!company) {
+
+                    company = new Company({
+
+                        companyName: companyName.trim()
+
+                    });
+
+                    await company.save();
+
+                }
+
+                existingRecruiter.recruiterName =
+                    recruiterName;
+
+                existingRecruiter.companyName =
+                    company.companyName;
+
+                existingRecruiter.companyId =
+                    company._id;
+
+                existingRecruiter.email =
+                    email;
+
+                existingRecruiter.password =
+                    hashedPassword;
+
+                existingRecruiter.verificationToken =
+                    verificationToken;
+
+                existingRecruiter.verificationTokenExpiry =
+                    verificationTokenExpiry;
 
                 await existingRecruiter.save();
 
@@ -50,41 +84,65 @@ const registerRecruiter = async (req, res) => {
 
                 console.log("3. Sending email...");
 
-                await sendVerificationEmail(email, verificationToken);
+                await sendVerificationEmail(
+                    email,
+                    verificationToken,
+                    "recruiters"
+                );
 
                 console.log("4. Email sent");
 
                 return res.status(200).json({
-                    message: "New verification email sent."
+                    message:
+                        "New verification email sent."
                 });
+
             }
 
             return res.status(400).json({
-                message: "Please check your email. Verification link is still valid."
+                message:
+                    "Please check your email. Verification link is still valid."
             });
 
         }
 
         console.log("Creating new recruiter...");
 
+        let company = await Company.findOne({
+            companyName: companyName.trim()
+        });
+
+        if (!company) {
+
+            company = new Company({
+
+                companyName: companyName.trim()
+
+            });
+
+            await company.save();
+
+        }
+
         const newRecruiter = new Recruiter({
 
             recruiterName,
-            companyName,
+            companyName: company.companyName,
             email,
             password: hashedPassword,
             verificationToken,
-            verificationTokenExpiry
+            verificationTokenExpiry,
+            companyId: company._id
 
         });
 
         await newRecruiter.save();
 
-        console.log("2. Recruiter saved");
+        console.log("2. Account created!");
 
-        console.log("3. Sending email...");
+        console.log("3. Sending verification email...");
 
-        await sendVerificationEmail(email, verificationToken);
+        await sendVerificationEmail(email, verificationToken, "recruiters");
 
         console.log("4. Email sent");
 
@@ -95,7 +153,7 @@ const registerRecruiter = async (req, res) => {
     }
     catch (err) {
 
-        console.error("REGISTER ERROR:", err);
+        console.error("REGISTRATION ERROR:", err);
 
         return res.status(500).json({
             message: err.message
@@ -134,7 +192,7 @@ const verifyRecruiter = async (req, res) => {
         await recruiter.save();
 
         return res.status(200).json({
-            message: "Email verified successfully!"
+            message: "Email verified successfully! Login to proceed."
         });
 
     }
@@ -203,6 +261,8 @@ const loginRecruiter = async (req, res) => {
                 recruiterName: recruiter.recruiterName,
 
                 companyName: recruiter.companyName,
+
+                companyId: recruiter.companyId,
 
                 email: recruiter.email
 

@@ -1,0 +1,481 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(79,70,229,.15),
+            transparent 35%
+        ),
+        #F8FAFC;
+
+    color: #111827;
+
+}
+
+
+.sidebar {
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    background: #111827;
+
+    padding: 35px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.brand {
+
+    color: #6366F1;
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    padding: 0 15px;
+
+    margin-bottom: 45px;
+
+}
+
+
+.sidebar a {
+
+    color: #D1D5DB;
+
+    text-decoration: none;
+
+    padding: 14px 16px;
+
+    border-radius: 10px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.sidebar a:hover {
+
+    background: #1F2937;
+
+    color: white;
+
+}
+
+
+.sidebar a.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    color: white;
+
+}
+
+
+.main {
+
+    margin-left: 250px;
+
+    padding: 45px 6% 70px;
+
+}
+
+
+.pageHeader {
+
+    margin-bottom: 35px;
+
+}
+
+
+.eyebrow {
+
+    color: #4F46E5;
+
+    font-size: .8rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+
+.pageHeader h1 {
+
+    font-size: 2.4rem;
+
+    margin: 7px 0;
+
+}
+
+
+.pageHeader p:last-child {
+
+    color: #6B7280;
+
+}
+
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 22px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.statCard {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.06);
+
+}
+
+
+.statCard span {
+
+    display: block;
+
+    color: #6B7280;
+
+    margin-bottom: 8px;
+
+}
+
+
+.statCard strong {
+
+    font-size: 2rem;
+
+    color: #4F46E5;
+
+}
+
+
+.section {
+
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.06);
+
+}
+
+
+.sectionHeader {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.sectionHeader h2 {
+
+    font-size: 1.5rem;
+
+    margin-bottom: 5px;
+
+}
+
+
+.sectionHeader p {
+
+    color: #6B7280;
+
+}
+
+
+#searchCollege {
+
+    width: 280px;
+
+    padding: 13px 16px;
+
+    border: 1px solid #D1D5DB;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    outline: none;
+
+}
+
+
+#searchCollege:focus {
+
+    border-color: #4F46E5;
+
+}
+
+
+.collegeGrid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 22px;
+
+}
+
+
+.collegeCard {
+
+    border: 1px solid #E5E7EB;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    transition: .2s;
+
+}
+
+
+.collegeCard:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.06);
+
+}
+
+
+.collegeTop {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.collegeIcon {
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #EEF2FF;
+
+    border-radius: 12px;
+
+    font-size: 1.4rem;
+
+}
+
+
+.collegeTop h2 {
+
+    font-size: 1.15rem;
+
+}
+
+
+.collegeTop p {
+
+    color: #6B7280;
+
+    font-size: .85rem;
+
+}
+
+
+.collegeInfo {
+
+    display: grid;
+
+    gap: 8px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.collegeInfo span {
+
+    color: #6B7280;
+
+    font-size: .9rem;
+
+}
+
+
+.requestBtn,
+.statusBtn {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-weight: 600;
+
+}
+
+
+.requestBtn {
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    cursor: pointer;
+
+}
+
+
+.requestBtn:hover {
+
+    opacity: .9;
+
+}
+
+
+.statusBtn.approved {
+
+    background: #DCFCE7;
+
+    color: #166534;
+
+}
+
+
+.statusBtn.pending {
+
+    background: #FEF3C7;
+
+    color: #92400E;
+
+}
+
+
+.loading {
+
+    color: #6B7280;
+
+    padding: 30px;
+
+    text-align: center;
+
+}
+
+
+@media(max-width: 900px) {
+
+    .collegeGrid,
+    .stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+@media(max-width: 700px) {
+
+    .sidebar {
+
+        width: 210px;
+
+    }
+
+    .main {
+
+        margin-left: 210px;
+
+        padding: 30px 20px;
+
+    }
+
+    .sectionHeader {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    #searchCollege {
+
+        width: 100%;
+
+    }
+
+}

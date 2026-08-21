@@ -65,8 +65,59 @@ const driveSchema = new mongoose.Schema({
         type: String,
         enum: ["Open", "Closed"],
         default: "Open"
-    }
+    },
+    interviewCandidates: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Student"
+        }
+    ],
+    interviewDetails: {
+        date: {
+            type: Date,
+            default: null
+        },
 
-}, { timestamps: true });
+        time: {
+            type: String,
+            default: ""
+        },
+
+        location: {
+            type: String,
+            default: ""
+        },
+
+        requiredDocuments: {
+            type: [String],
+            default: []
+        },
+
+        additionalInstructions: {
+            type: String,
+            default: ""
+        }
+    },
+
+    interviewEmailsSent: {
+        type: Boolean,
+        default: false
+    },
+
+    companyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Company",
+        default: null
+    },
+
+    targetColleges: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "College"
+        }
+    ],
+
+}, { timestamps: true }, 
+);
 
 module.exports = mongoose.model("Drive", driveSchema);

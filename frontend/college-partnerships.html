@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | College Partnerships</title>
+
+    <link rel="stylesheet"
+          href="css/college-partnerships.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="brand">
+        ScoutHire
+    </div>
+
+    <a href="dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="recruitment-drives.html">
+        Recruitment Drives
+    </a>
+
+    <a href="college-partnerships.html"
+       class="active">
+        College Partnerships
+    </a>
+
+    <a href="profile.html">
+        Profile
+    </a>
+
+    <a href="#"
+       id="logoutBtn">
+        Logout
+    </a>
+
+</div>
+
+
+<main class="main">
+
+    <div class="pageHeader">
+
+        <p class="eyebrow">
+            Campus Network
+        </p>
+
+        <h1>
+            College Partnerships
+        </h1>
+
+        <p>
+            Request partnerships with colleges and manage your existing relationships.
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="statCard">
+
+            <span>
+                Approved
+            </span>
+
+            <strong id="approvedCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="statCard">
+
+            <span>
+                Pending
+            </span>
+
+            <strong id="pendingCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="statCard">
+
+            <span>
+                Available
+            </span>
+
+            <strong id="availableCount">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Colleges
+                </h2>
+
+                <p>
+                    Connect with colleges where your company wants to conduct recruitment.
+                </p>
+
+            </div>
+
+            <input
+                type="text"
+                id="searchCollege"
+                placeholder="Search colleges..."
+            >
+
+            
+
+        </div>
+
+
+        <div id="collegeList"
+             class="collegeGrid">
+
+            <p class="loading">
+                Loading colleges...
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="js/college-partnerships.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | OA Results</title>
+
+    <link rel="stylesheet"
+          href="css/oa-results.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>ScoutHire</h2>
+
+    <a href="dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="recruitment-drives.html">
+        Recruitment Drives
+    </a>
+
+    <a href="profile.html">
+        Profile
+    </a>
+
+    <a href="#" id="logoutBtn">
+        Logout
+    </a>
+
+</div>
+
+
+<div class="main">
+
+    <div class="pageHeader">
+
+        <div>
+
+            <p class="backLink" id="backBtn">
+                ← Back to Drive
+            </p>
+
+            <h1>
+                OA Results
+            </h1>
+
+            <p>
+                Review candidate performance in the online assessment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summaryCard">
+
+            <span>
+                Total Results
+            </span>
+
+            <strong id="totalResults">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summaryCard">
+
+            <span>
+                Average Score
+            </span>
+
+            <strong id="averageScore">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summaryCard">
+
+            <span>
+                Average Integrity
+            </span>
+
+            <strong id="averageIntegrity">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summaryCard">
+
+            <span>
+                Average Pass Ratio
+            </span>
+
+            <strong id="averagePassRatio">
+                0%
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="controls">
+
+        <div>
+
+            <label for="sortSelect">
+                Sort By
+            </label>
+
+            <select id="sortSelect">
+
+                <option value="score">
+                    OA Score
+                </option>
+
+                <option value="passRatio">
+                    Test Pass Ratio
+                </option>
+
+                <option value="integrity">
+                    Integrity Score
+                </option>
+
+                <option value="flags">
+                    Integrity Flags
+                </option>
+
+                <option value="submission">
+                    Submission Time
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button id="interviewBtn"
+                class="interviewBtn">
+
+            Select Interview Candidates
+
+        </button>
+
+    </div>
+
+
+    <div class="tableContainer">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        <input
+                            type="checkbox"
+                            id="selectAll">
+
+                    </th>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        USN
+                    </th>
+
+                    <th>
+                        OA Score
+                    </th>
+
+                    <th>
+                        Test Pass Ratio
+                    </th>
+
+                    <th>
+                        Integrity
+                    </th>
+
+                    <th>
+                        Flags
+                    </th>
+
+                    <th>
+                        Submitted
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="resultsTable">
+
+                <tr>
+
+                    <td colspan="10"
+                        class="loading">
+
+                        Loading OA results...
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<script src="js/oa-results.js"></script>
+
+</body>
+
+</html>

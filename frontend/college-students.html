@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | College Students</title>
+
+    <link rel="stylesheet"
+          href="css/college-students.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="brand">
+        ScoutHire
+    </div>
+
+    <a href="college-dashboard.html">
+        Dashboard
+    </a>
+
+    <a href="college-companies.html">
+        Companies
+    </a>
+
+    <a href="college-students.html"
+       class="active">
+        Students
+    </a>
+
+    <a href="college-drives.html">
+        Recruitment Drives
+    </a>
+
+    <a href="college-profile.html">
+        Profile
+    </a>
+
+    <a href="#"
+       id="logoutBtn">
+        Logout
+    </a>
+
+</div>
+
+
+<main class="main">
+
+    <div class="pageHeader">
+
+        <p class="eyebrow">
+            Student Management
+        </p>
+
+        <h1>
+            Students
+        </h1>
+
+        <p>
+            Manage the students associated with your college.
+        </p>
+
+    </div>
+
+
+    <div class="uploadCard">
+
+        <div>
+
+            <h2>
+                Upload Student Data
+            </h2>
+
+            <p>
+                Upload a CSV containing your college's student records.
+                Existing students with the same USN will be updated.
+            </p>
+
+        </div>
+
+
+        <form id="uploadForm">
+
+            <div class="fileBox">
+
+                <input
+                    type="file"
+                    id="studentFile"
+                    accept=".csv"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="uploadBtn">
+
+                Upload Students
+
+            </button>
+
+        </form>
+
+
+        <p id="uploadMessage"></p>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <div>
+
+            <h2>
+                Student Directory
+            </h2>
+
+            <p id="studentSummary">
+                Loading students...
+            </p>
+
+        </div>
+
+
+        <input
+            type="text"
+            id="searchStudent"
+            placeholder="Search by name or USN..."
+        >
+
+    </div>
+
+
+    <div id="studentList"
+         class="studentTable">
+
+        <p class="loading">
+            Loading students...
+        </p>
+
+    </div>
+
+</main>
+
+
+<script src="js/college-students.js"></script>
+
+</body>
+
+</html>

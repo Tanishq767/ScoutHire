@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScoutHire | Interview Details</title>
+
+    <link rel="stylesheet" href="css/interview-details.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>ScoutHire</h2>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="recruitment-drives.html">
+            Recruitment Drives
+        </a>
+
+        <a href="profile.html">
+            Profile
+        </a>
+
+        <a href="#" id="logoutBtn">
+            Logout
+        </a>
+
+    </div>
+
+
+    <div class="main">
+
+        <div class="pageHeader">
+
+            <p class="backLink" id="backBtn">
+                ← Back to OA Results
+            </p>
+
+            <h1>
+                Schedule Interviews
+            </h1>
+
+            <p>
+                Configure the interview details for the selected candidates.
+            </p>
+
+        </div>
+
+
+        <div class="interviewLayout">
+
+            <div class="formCard">
+
+                <div class="sectionHeader">
+
+                    <div class="sectionIcon">
+                        📅
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Interview Details
+                        </h2>
+
+                        <p>
+                            Information that will be shared with candidates
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="interviewForm">
+
+                    <div class="formGrid">
+
+                        <div class="formGroup">
+
+                            <label for="interviewDate">
+                                Interview Date
+                            </label>
+
+                            <input type="date" id="interviewDate" required>
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label for="interviewTime">
+                                Interview Time
+                            </label>
+
+                            <input type="time" id="interviewTime" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="formGroup">
+
+                        <label for="location">
+                            Interview Location / Meeting Link
+                        </label>
+
+                        <input type="text" id="location" placeholder="e.g. Placement Cell, MSRIT or Google Meet link"
+                            required>
+
+                    </div>
+
+
+                    <div class="formGroup">
+
+                        <label>
+                            Required Documents
+                        </label>
+
+                        <div class="documentGrid">
+
+                            <label class="documentOption">
+
+                                <input type="checkbox" name="documents" value="Latest Resume" checked>
+
+                                <span>
+                                    Latest Resume
+                                </span>
+
+                            </label>
+
+
+                            <label class="documentOption">
+
+                                <input type="checkbox" name="documents" value="College ID" checked>
+
+                                <span>
+                                    College ID
+                                </span>
+
+                            </label>
+
+
+                            <label class="documentOption">
+
+                                <input type="checkbox" name="documents" value="Government ID">
+
+                                <span>
+                                    Government ID
+                                </span>
+
+                            </label>
+
+
+                            <label class="documentOption">
+
+                                <input type="checkbox" name="documents" value="Passport Photograph">
+
+                                <span>
+                                    Passport Photograph
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="formGroup">
+
+                        <label for="instructions">
+                            Additional Instructions
+                        </label>
+
+                        <textarea id="instructions" rows="5"
+                            placeholder="Enter any additional instructions for candidates..."></textarea>
+
+                    </div>
+
+
+                    <div class="buttonGroup">
+
+                        <button type="submit" class="saveBtn">
+
+                            Save Interview Details
+
+                        </button>
+
+
+                        <button type="button" id="sendInvitationsBtn" class="sendBtn" disabled>
+
+                            Send Interview Invitations
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="candidateCard">
+
+                <div class="sectionHeader">
+
+                    <div class="sectionIcon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Selected Candidates
+                        </h2>
+
+                        <p>
+                            Candidates selected from OA results
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="candidateCount">
+
+                    <strong id="candidateCount">
+                        0
+                    </strong>
+
+                    <span>
+                        candidates selected
+                    </span>
+
+                </div>
+
+
+                <div id="candidateList" class="candidateList">
+
+                    <p class="loading">
+                        Loading candidates...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/interview-details.js"></script>
+
+</body>
+
+</html>

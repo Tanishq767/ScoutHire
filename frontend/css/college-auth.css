@@ -1,0 +1,157 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(79,70,229,.25),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(59,130,246,.20),
+            transparent 35%
+        ),
+        #F8FAFC;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.authContainer{
+
+    width:100%;
+
+    max-width:500px;
+
+    padding:25px;
+
+}
+
+.authCard{
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.1);
+
+}
+
+.authCard h1{
+
+    color:#3B5BDB;
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+}
+
+.authCard h2{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.authCard form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.authCard input{
+
+    width:100%;
+
+    padding:13px 15px;
+
+    border:1px solid #D1D5DB;
+
+    border-radius:10px;
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    outline:none;
+
+}
+
+.authCard input:focus{
+
+    border-color:#4F46E5;
+
+}
+
+.authCard button{
+
+    border:none;
+
+    padding:14px;
+
+    border-radius:10px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.authCard p{
+
+    margin:15px 0;
+
+    text-align:center;
+
+}
+
+.authCard a{
+
+    display:block;
+
+    text-align:center;
+
+    color:#4F46E5;
+
+    text-decoration:none;
+
+}

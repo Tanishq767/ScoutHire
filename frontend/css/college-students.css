@@ -1,0 +1,495 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(79,70,229,.18),
+            transparent 35%
+        ),
+        #F8FAFC;
+
+    color:#111827;
+
+    min-height:100vh;
+
+}
+
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:250px;
+    height:100vh;
+
+    background:#111827;
+
+    padding:35px 20px;
+
+    display:flex;
+    flex-direction:column;
+
+    z-index:1000;
+
+}
+
+
+.brand{
+
+    color:#4F46E5;
+
+    font-size:1.8rem;
+
+    font-weight:700;
+
+    padding:0 15px;
+
+    margin-bottom:45px;
+
+}
+
+
+.sidebar a{
+
+    color:#D1D5DB;
+
+    text-decoration:none;
+
+    padding:14px 16px;
+
+    border-radius:10px;
+
+    margin-bottom:8px;
+
+    transition:.25s;
+
+}
+
+
+.sidebar a:hover{
+
+    background:#1F2937;
+
+    color:white;
+
+}
+
+
+.sidebar a.active{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    color:white;
+
+}
+
+
+.main{
+
+    margin-left:250px;
+
+    padding:45px 6% 70px;
+
+}
+
+
+.pageHeader{
+
+    margin-bottom:35px;
+
+}
+
+
+.eyebrow{
+
+    color:#4F46E5;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:1px;
+
+}
+
+
+.pageHeader h1{
+
+    font-size:2.4rem;
+
+    margin:7px 0;
+
+}
+
+
+.pageHeader p:last-child{
+
+    color:#6B7280;
+
+}
+
+
+.uploadCard{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.06);
+
+    margin-bottom:40px;
+
+}
+
+
+.uploadCard h2{
+
+    margin-bottom:8px;
+
+}
+
+
+.uploadCard > div p{
+
+    color:#6B7280;
+
+    font-size:.9rem;
+
+    margin-bottom:25px;
+
+}
+
+
+.uploadCard form{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+.fileBox{
+
+    flex:1;
+
+}
+
+
+.fileBox input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:10px;
+
+    font-family:'Poppins',sans-serif;
+
+    background:#F9FAFB;
+
+}
+
+
+.uploadCard button{
+
+    border:none;
+
+    padding:13px 22px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4F46E5,
+            #3B82F6
+        );
+
+    color:white;
+
+    font-family:'Poppins',sans-serif;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+.uploadCard button:disabled{
+
+    background:#D1D5DB;
+
+    cursor:not-allowed;
+
+}
+
+
+#uploadMessage{
+
+    margin-top:15px;
+
+    font-size:.9rem;
+
+    font-weight:500;
+
+}
+
+
+.toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:end;
+
+    gap:25px;
+
+    margin-bottom:20px;
+
+}
+
+
+.toolbar h2{
+
+    margin-bottom:5px;
+
+}
+
+
+.toolbar p{
+
+    color:#6B7280;
+
+    font-size:.9rem;
+
+}
+
+
+.toolbar input{
+
+    width:320px;
+
+    padding:13px 16px;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-family:'Poppins',sans-serif;
+
+    background:white;
+
+}
+
+
+.toolbar input:focus{
+
+    border-color:#4F46E5;
+
+}
+
+
+.studentTable{
+
+    background:white;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.06);
+
+}
+
+
+.studentRow{
+
+    display:grid;
+
+    grid-template-columns:
+        1.4fr
+        1fr
+        .7fr
+        .7fr
+        .8fr;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:18px 25px;
+
+    border-bottom:1px solid #F3F4F6;
+
+}
+
+
+.studentRow.header{
+
+    background:#F9FAFB;
+
+    color:#6B7280;
+
+    font-size:.78rem;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+}
+
+
+.studentRow:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.studentName{
+
+    font-weight:600;
+
+}
+
+
+.studentEmail{
+
+    color:#6B7280;
+
+    font-size:.82rem;
+
+}
+
+
+.cgpa{
+
+    font-weight:600;
+
+    color:#4F46E5;
+
+}
+
+
+.branch{
+
+    color:#374151;
+
+    font-size:.9rem;
+
+}
+
+
+.year{
+
+    color:#6B7280;
+
+}
+
+
+.loading{
+
+    padding:30px;
+
+    color:#6B7280;
+
+}
+
+
+@media(max-width:1000px){
+
+    .studentRow{
+
+        grid-template-columns:
+            1.5fr
+            1fr
+            .7fr;
+
+    }
+
+    .studentRow > :nth-child(4),
+    .studentRow > :nth-child(5){
+
+        display:none;
+
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+    .main{
+
+        margin-left:0;
+
+        padding:30px 20px;
+
+    }
+
+    .uploadCard form{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar input{
+
+        width:100%;
+
+    }
+
+}

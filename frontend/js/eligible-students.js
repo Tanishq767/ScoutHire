@@ -4,15 +4,15 @@ const params = new URLSearchParams(window.location.search);
 
 const driveId = params.get("id");
 
-if(!driveId){
+if (!driveId) {
 
     window.location.href = "dashboard.html";
 
 }
 
-async function loadPage(){
+async function loadPage() {
 
-    try{
+    try {
 
         const token = localStorage.getItem("token");
 
@@ -22,8 +22,8 @@ async function loadPage(){
 
             {
 
-                headers:{
-                    "Authorization":"Bearer " + token
+                headers: {
+                    "Authorization": "Bearer " + token
                 }
 
             }
@@ -33,10 +33,10 @@ async function loadPage(){
         const drive = await driveResponse.json();
 
         document.getElementById("jobTitle").textContent =
-        drive.jobTitle;
+            drive.jobTitle;
 
         document.getElementById("companyName").textContent =
-        drive.companyName;
+            drive.companyName;
 
         const studentResponse = await fetch(
 
@@ -44,8 +44,8 @@ async function loadPage(){
 
             {
 
-                headers:{
-                    "Authorization":"Bearer " + token
+                headers: {
+                    "Authorization": "Bearer " + token
                 }
 
             }
@@ -55,12 +55,12 @@ async function loadPage(){
         const students = await studentResponse.json();
 
         document.getElementById("matchCount").textContent =
-        students.length;
+            students.length;
 
         const table =
-        document.getElementById("studentTable");
+            document.getElementById("studentTable");
 
-        students.forEach((student,index)=>{
+        students.forEach((student, index) => {
 
             table.innerHTML += `
 
@@ -74,7 +74,7 @@ async function loadPage(){
 
                 <td>
 
-                    ${index+1}
+                    ${index + 1}
 
                 </td>
                 <td>
@@ -105,13 +105,16 @@ async function loadPage(){
                 </td>
 
                 <td>
-
-                    <button>
-
-                        Resume
-
-                    </button>
-
+                    ${item.student.resumeURL
+                    ? `<a
+                            href="http://localhost:3000${student.resumeURL}"
+                            target="_blank"
+                            class="resumeBtn"
+                        >
+                            Resume
+                        </a>`
+                    : `<span class="noResume">Not Uploaded</span>`
+                }
                 </td>
 
                 <td>
@@ -132,7 +135,7 @@ async function loadPage(){
 
     }
 
-    catch(err){
+    catch (err) {
 
         console.log(err);
 
@@ -142,22 +145,17 @@ async function loadPage(){
 
 loadPage();
 
-async function generateRanking(){
+async function generateRanking() {
 
-    try{
+    try {
 
         const token = localStorage.getItem("token");
 
         const weights = {
-
-            CGPA:Number(document.getElementById("cgpaWeight").value),
-
-            projects:Number(document.getElementById("projectWeight").value),
-
-            CPRating:Number(document.getElementById("cpWeight").value),
-
-            internships:Number(document.getElementById("internshipWeight").value)
-
+            CGPA: Number(document.getElementById("cgpaWeight").value),
+            projects: Number(document.getElementById("projectWeight").value),
+            CPRating: Number(document.getElementById("cpWeight").value),
+            internships: Number(document.getElementById("internshipWeight").value)
         };
 
         const top = Number(document.getElementById("topStudents").value);
@@ -167,27 +165,16 @@ async function generateRanking(){
             `${API_BASE}/drives/${driveId}/rank`,
 
             {
-
-                method:"POST",
-
-                headers:{
-
-                    "Content-Type":"application/json",
-
-                    "Authorization":"Bearer " + token
-
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
                 },
-
-                body:JSON.stringify({
-
+                body: JSON.stringify({
                     weights,
-
                     top
-
                 })
-
             }
-
         );
 
         const rankedStudents = await response.json();
@@ -197,9 +184,9 @@ async function generateRanking(){
         table.innerHTML = "";
 
         document.getElementById("matchCount").textContent =
-        rankedStudents.length;
+            rankedStudents.length;
 
-        rankedStudents.forEach(item=>{
+        rankedStudents.forEach(item => {
 
             table.innerHTML += `
 
@@ -214,7 +201,7 @@ async function generateRanking(){
                 </td>
 
                 <td>
-                    ${(item.score*100).toFixed(2)}
+                    ${(item.score * 100).toFixed(2)}
                 </td>
 
                 <td>
@@ -234,13 +221,23 @@ async function generateRanking(){
                 </td>
 
                 <td>
-                    <button>
-                        Resume
-                    </button>
+                    ${
+                        item.student.resumeURL
+                        ? `<a
+                            href="http://localhost:3000${item.student.resumeURL}"
+                            target="_blank"
+                            class="resumeBtn"
+                        >
+                            Resume
+                        </a>`
+                        : `<span class="noResume">Not Uploaded</span>`
+                    }
                 </td>
 
                 <td>
-                    <button>
+                    <button
+                        class="viewBtn"
+                        onclick="viewStudent('${item.student.USN}')">
                         View
                     </button>
                 </td>
@@ -249,36 +246,36 @@ async function generateRanking(){
         });
     }
 
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
 
-async function shortlistStudents(){
+async function shortlistStudents() {
 
     const selected = [];
 
     document.querySelectorAll(".studentCheck:checked")
-    .forEach(box=>{
-        selected.push(box.value);
-    });
+        .forEach(box => {
+            selected.push(box.value);
+        });
 
-    if(selected.length===0){
+    if (selected.length === 0) {
         alert("Please select at least one student.");
         return;
     }
 
-    try{
+    try {
         const response = await fetch(
             `${API_BASE}/drives/${driveId}/shortlist`,
             {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"Bearer " + localStorage.getItem("token")
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 },
-                body:JSON.stringify({
-                    students:selected
+                body: JSON.stringify({
+                    students: selected
                 })
             }
         );
@@ -286,20 +283,20 @@ async function shortlistStudents(){
         alert(data.message);
     }
 
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
 
-async function sendOAEmails(){
+async function sendOAEmails() {
     console.log("Send OA clicked");
-    try{
+    try {
         const response = await fetch(
             `${API_BASE}/drives/${driveId}/send-oa`,
             {
-                method:"POST",
-                headers:{
-                    "Authorization":"Bearer " + localStorage.getItem("token")
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 }
             }
         );
@@ -307,20 +304,137 @@ async function sendOAEmails(){
         alert(data.message);
     }
 
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 
+}
+
+async function searchStudent(){
+
+    try{
+
+        const name = document.getElementById("search").value.trim();
+
+        if(name === ""){
+            loadPage();
+            return;
+        }
+
+        const response = await fetch(
+            `${API_BASE}/students/searchStudent/${encodeURIComponent(name)}`,
+            {
+                method:"GET",
+                headers:{
+                    "Authorization":"Bearer " + localStorage.getItem("token")
+                }
+            }
+        );
+
+        const student = await response.json();
+
+        if(!response.ok){
+            alert(student.message || "Student not found.");
+            return;
+        }
+
+        const table = document.getElementById("studentTable");
+
+        table.innerHTML = `
+            <tr>
+
+                <td>
+                    <input
+                        type="checkbox"
+                        class="studentCheck"
+                        value="${student.USN}"
+                    >
+                </td>
+
+                <td>
+                    1
+                </td>
+
+                <td>
+                    -
+                </td>
+
+                <td>
+                    ${student.name}
+                </td>
+
+                <td>
+                    ${student.USN}
+                </td>
+
+                <td>
+                    ${student.Branch}
+                </td>
+
+                <td>
+                    ${student.CGPA}
+                </td>
+
+                <td>
+                    ${
+                        student.resumeURL
+                        ? `<a
+                            href="http://localhost:3000${student.resumeURL}"
+                            target="_blank"
+                            class="resumeBtn"
+                        >
+                            Resume
+                        </a>`
+                        : `<span class="noResume">
+                            Not Uploaded
+                        </span>`
+                    }
+                </td>
+
+                <td>
+                    <button
+                        class="viewBtn"
+                        onclick="viewStudent('${student.USN}')">
+                        View
+                    </button>
+                </td>
+
+            </tr>
+        `;
+
+        document.getElementById("matchCount").textContent = 1;
+
+    }
+    catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+function viewStudent(usn){
+    window.location.href =
+        `student-details.html?usn=${encodeURIComponent(usn)}`;
 }
 
 document.getElementById("rankBtn").addEventListener("click", generateRanking);
 
 document.getElementById("shortlistBtn").addEventListener("click", shortlistStudents);
 
-document.getElementById("selectAll").addEventListener("change", function(){
+document.getElementById("selectAll").addEventListener("change", function () {
     document.querySelectorAll(".studentCheck")
-    .forEach(box=>{
-        box.checked = this.checked;
-    });
+        .forEach(box => {
+            box.checked = this.checked;
+        });
 });
 document.getElementById("sendOABtn").addEventListener("click", sendOAEmails);
+
+document.getElementById("search").addEventListener("keydown", function(e){
+
+    if(e.key === "Enter"){
+        searchStudent();
+    }
+
+});
+

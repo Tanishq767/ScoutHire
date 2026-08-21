@@ -6,6 +6,8 @@ const mongoose  = require('mongoose')
 const students = require('./routes/students')
 const recruiterRoutes = require("./routes/recruiterRoutes");
 const driveRoutes = require("./routes/drive");
+const collegeRoutes = require("./routes/collegeRoutes");
+const companyRoutes = require("./routes/companyRoutes");
 
 
 mongoose.connect('mongodb://127.0.0.1/mydb')
@@ -16,7 +18,10 @@ app.use(cors())
 app.use(express.json())
 app.use('/api/students', students)
 app.use('/api/recruiters', recruiterRoutes)
-app.use("/api/drives", driveRoutes);
+app.use("/api/drives", driveRoutes)
+app.use("/uploads", express.static("uploads"))
+app.use("/api/colleges", collegeRoutes);
+app.use("/api/companies", companyRoutes);
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`));

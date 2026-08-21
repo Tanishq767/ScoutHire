@@ -46,6 +46,8 @@ async function loadDrive(){
 
         document.getElementById("cgpa").textContent = drive.minimumCGPA;
 
+        document.getElementById("applicantCount").textContent = drive.appliedStudents?.length || 0;
+
         document.getElementById("deadline").textContent =
         new Date(drive.applicationDeadline).toLocaleDateString();
 
@@ -117,12 +119,118 @@ async function deleteDrive() {
 
 loadDrive();
 
-document.getElementById("deleteDriveBtn")
-.addEventListener("click", deleteDrive);
+document.getElementById("deleteDriveBtn").addEventListener("click", deleteDrive);
 
 document.getElementById("eligibleBtn").addEventListener("click", () => {
 
     window.location.href =
-    `eligible-students.html?id=${driveId}`;
+        `eligible-students.html?id=${driveId}`;
+
+});
+
+document.getElementById("oaResultsBtn").addEventListener("click", () => {
+
+    window.location.href =
+        `oa-results.html?id=${driveId}`;
+
+});
+
+document.getElementById("backBtn").addEventListener("click", () => {
+
+    window.location.href = "recruitment-drives.html";
+
+});
+
+document.getElementById("oaResultsBtnBottom").addEventListener("click", () => {
+
+    window.location.href =
+        `oa-results.html?id=${driveId}`;
+
+});
+
+document.getElementById("oaUploadForm").addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const file =
+        document.getElementById("oaFile").files[0];
+
+    if(!file){
+
+        alert("Please select an OA result CSV file.");
+
+        return;
+
+    }
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    try{
+
+        const response = await fetch(
+            `${API_BASE}/drives/${driveId}/upload-oa`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Authorization":
+                        "Bearer " +
+                        localStorage.getItem("token")
+                },
+
+                body: formData
+            }
+        );
+
+        const text = await response.text();
+
+        console.log("OA UPLOAD STATUS:", response.status);
+        console.log("OA UPLOAD RESPONSE:", text);
+
+        let data;
+
+        try {
+            data = JSON.parse(text);
+        }
+        catch {
+            alert("Server returned an unexpected error. Check the backend terminal.");
+            return;
+        }
+
+        if(!response.ok){
+
+            alert(
+                data.message ||
+                "Unable to upload OA results."
+            );
+
+            return;
+
+        }
+
+        alert(
+            `OA results uploaded successfully!\n\n` +
+            `Updated: ${data.updated}\n` +
+            `Skipped: ${data.skipped}`
+        );
+
+        window.location.href =
+            `oa-results.html?id=${driveId}`;
+
+    }
+    catch(err){
+
+        console.error(
+            "OA UPLOAD ERROR:",
+            err
+        );
+
+        alert(
+            "Unable to upload OA results."
+        );
+
+    }
 
 });

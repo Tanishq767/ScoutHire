@@ -34,6 +34,7 @@ async function loadDrives(){
                 <p><b>Applicants:</b> ${(drive.appliedStudents || []).length}</p>
                 <p><b>Status:</b> ${drive.status}</p>
                 <p><b>Deadline:</b> ${new Date(drive.applicationDeadline).toLocaleDateString()}</p>
+                <p><b>Applicants:</b> ${drive.appliedStudents.length}</p>
             </div>
             `;
         });

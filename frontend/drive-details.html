@@ -5,68 +5,346 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>ScoutHire | Drive Details</title>
 
-    <link rel="stylesheet" href="css/drive-details.css">
+    <link rel="stylesheet"
+          href="css/drive-details.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="container">
+<div class="sidebar">
 
-    <a href="dashboard.html" class="backBtn">
+    <h2>ScoutHire</h2>
 
-        ← Back to Dashboard
-
+    <a href="dashboard.html">
+        Dashboard
     </a>
 
-    <div class="card">
+    <a href="recruitment-drives.html">
+        Recruitment Drives
+    </a>
 
-        <h1 id="jobTitle"></h1>
+    <a href="profile.html">
+        Profile
+    </a>
 
-        <p id="companyName"></p>
+    <a href="#" id="logoutBtn">
+        Logout
+    </a>
 
-        <div class="details">
+</div>
 
-            <p><b>Package:</b> <span id="package"></span></p>
+<div class="main">
 
-            <p><b>Location:</b> <span id="location"></span></p>
+    <div class="pageHeader">
 
-            <p><b>Minimum CGPA:</b> <span id="cgpa"></span></p>
+        <p class="backLink"
+           id="backBtn">
+            ← Back to Recruitment Drives
+        </p>
 
-            <p><b>Deadline:</b> <span id="deadline"></span></p>
+        <h1>
+            Drive Details
+        </h1>
+
+    </div>
+
+    <div class="driveLayout">
+
+        <div class="driveCard">
+
+            <div class="sectionHeader">
+
+                <div class="sectionIcon">
+                    💼
+                </div>
+
+                <div>
+
+                    <h2>
+                        Drive Details
+                    </h2>
+
+                    <p>
+                        Recruitment drive information
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="infoGrid">
+
+                <div class="infoItem">
+
+                    <span>
+                        Job Title
+                    </span>
+
+                    <strong id="jobTitle">
+                        Loading...
+                    </strong>
+
+                </div>
+
+                <div class="infoItem">
+
+                    <span>
+                        Company
+                    </span>
+
+                    <strong id="companyName">
+                        Loading...
+                    </strong>
+
+                </div>
+
+                <div class="infoItem">
+
+                    <span>
+                        Package
+                    </span>
+
+                    <strong class="highlight"
+                            id="package">
+                        Loading...
+                    </strong>
+
+                </div>
+
+                <div class="infoItem">
+
+                    <span>
+                        Location
+                    </span>
+
+                    <strong id="location">
+                        Loading...
+                    </strong>
+
+                </div>
+
+                <div class="infoItem">
+
+                    <span>
+                        Minimum CGPA
+                    </span>
+
+                    <strong id="cgpa">
+                        Loading...
+                    </strong>
+
+                </div>
+
+                <div class="infoItem">
+
+                    <span>
+                        Application Deadline
+                    </span>
+
+                    <strong class="deadline"
+                            id="deadline">
+                        Loading...
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="detailSection">
+
+                <h3>
+                    Eligible Branches
+                </h3>
+
+                <div id="branches"
+                     class="tagContainer">
+
+                </div>
+
+            </div>
+
+            <div class="detailSection">
+
+                <h3>
+                    Required Skills
+                </h3>
+
+                <div id="skills"
+                     class="tagContainer">
+
+                </div>
+
+            </div>
+
+            <div class="detailSection">
+
+                <h3>
+                    Job Description
+                </h3>
+
+                <div id="description"
+                     class="descriptionBox">
+
+                    Loading...
+
+                </div>
+
+            </div>
+
+            <div class="applicantInfo">
+
+                👥
+
+                <strong>
+                    Applicants:
+                </strong>
+
+                <span id="applicantCount">
+                    0
+                </span>
+
+            </div>
 
         </div>
 
-        <h3>Eligible Branches</h3>
+        <div class="oaCard">
 
-        <ul id="branches"></ul>
+            <div class="sectionHeader">
 
-        <h3>Required Skills</h3>
+                <div class="sectionIcon">
+                    📄
+                </div>
 
-        <ul id="skills"></ul>
+                <div>
 
-        <h3>Job Description</h3>
+                    <h2>
+                        Online Assessment
+                    </h2>
 
-        <p id="description"></p>
+                    <p>
+                        Upload and analyze OA results
+                    </p>
 
-        <button id="eligibleBtn">
+                </div>
 
-            Find Eligible Students
+            </div>
+
+            <p class="oaDescription">
+
+                Upload the OA result CSV exported from
+                your assessment platform.
+
+            </p>
+
+            <div class="csvInfo">
+
+                <strong>
+                    ⓘ CSV should include:
+                </strong>
+
+                <p>
+
+                    USN, Name, Email,
+                    SubmissionTimestamp,
+                    TotalScore, TotalMarks,
+                    TestsPassed, TestsTotal,
+                    IntegrityScore, IntegrityFlags
+
+                </p>
+
+            </div>
+
+            <div class="uploadSection">
+
+                <h3>
+                    Upload OA Result CSV
+                </h3>
+
+                <form id="oaUploadForm">
+
+                    <input
+                        type="file"
+                        id="oaFile"
+                        accept=".csv"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="uploadBtn">
+
+                        ↑ Upload OA Results
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <button
+                id="oaResultsBtn"
+                class="resultsBtn">
+
+                View OA Results
+
+            </button>
+
+            <div class="successInfo">
+
+                <span>
+
+                    After uploading, you can view and
+                    analyze results and select candidates
+                    for interviews.
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="driveActions">
+
+        <button
+            id="eligibleBtn"
+            class="manageBtn">
+
+            👥 Manage Applicants
 
         </button>
 
-        <button id="deleteDriveBtn" class="deleteBtn">
-            Delete Drive
+        <button
+            id="oaResultsBtnBottom"
+            class="manageBtn">
+
+            📊 View OA Results
+
+        </button>
+
+        <button
+            id="deleteDriveBtn"
+            class="deleteBtn">
+
+            🗑 Delete Drive
+
         </button>
 
     </div>

@@ -259,3 +259,23 @@ button:hover{
     background:#4338CA;
 
 }
+
+.resumeBtn{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:8px;
+    background:#4F46E5;
+    color:white;
+    text-decoration:none;
+    font-size:.9rem;
+    transition:.25s;
+}
+
+.resumeBtn:hover{
+    background:#4338CA;
+}
+
+.noResume{
+    color:#9CA3AF;
+    font-size:.9rem;
+}

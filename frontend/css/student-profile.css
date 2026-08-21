@@ -1,0 +1,142 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#F5F7FB;
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:260px;
+    background:#111827;
+    color:white;
+    padding:35px 25px;
+    display:flex;
+    flex-direction:column;
+}
+
+.sidebar h2{
+    margin-bottom:45px;
+    color:#6366F1;
+    font-size:1.9rem;
+}
+
+.sidebar a{
+    text-decoration:none;
+    color:#D1D5DB;
+    margin-bottom:22px;
+    font-size:1rem;
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    color:white;
+    transform:translateX(6px);
+}
+
+.main{
+    flex:1;
+    padding:45px;
+}
+
+.topbar{
+    margin-bottom:35px;
+}
+
+.topbar h1{
+    font-size:2.2rem;
+    color:#111827;
+}
+
+.topbar p{
+    color:#6B7280;
+    margin-top:8px;
+}
+
+.profileGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.profileCard{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.profileCard h2{
+    color:#111827;
+    margin-bottom:25px;
+}
+
+.infoRow{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.infoRow span{
+    color:#6B7280;
+}
+
+.infoRow strong{
+    color:#111827;
+}
+
+#resumeStatus{
+    color:#6B7280;
+    margin-bottom:15px;
+}
+
+.viewResume{
+    display:inline-block;
+    color:#4F46E5;
+    text-decoration:none;
+    margin-bottom:25px;
+    font-weight:500;
+}
+
+.viewResume:hover{
+    color:#4338CA;
+}
+
+#resumeForm{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+#resume{
+    padding:12px;
+    border:1px solid #D1D5DB;
+    border-radius:10px;
+}
+
+#resumeForm button{
+    padding:13px;
+    border:none;
+    border-radius:10px;
+    background:#4F46E5;
+    color:white;
+    font-family:'Poppins',sans-serif;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+#resumeForm button:hover{
+    background:#4338CA;
+}
+
+.resumeNote{
+    margin-top:15px;
+    color:#9CA3AF;
+    font-size:.85rem;
+}
