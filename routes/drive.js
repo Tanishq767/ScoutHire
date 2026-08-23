@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const driveController = require("../controllers/driveController");
 const authenticateRecruiter = require("../middlewares/authenticateRecruiter");
-const oaUpload = require("../middlewares/oaUpload");
+const oaUpload = require("../middlewares/oaupload");
 
 router.get("/", authenticateRecruiter, driveController.getMyDrives);
 
