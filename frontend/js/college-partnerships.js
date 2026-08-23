@@ -1,5 +1,5 @@
 const API_BASE =
-    "http://localhost:3000/api";
+    "/api";
 
 
 const token =
@@ -169,6 +169,7 @@ function renderColleges(list){
 
 
         let button = "";
+        let removeButton = "";
 
 
         let statusText = "";
@@ -265,6 +266,22 @@ function renderColleges(list){
 
         }
 
+        if(status !== "Not Requested"){
+
+            removeButton = `
+
+                <button
+                    class="removeBtn"
+                    data-id="${college._id}">
+
+                    Remove Partnership
+
+                </button>
+
+            `;
+
+        }
+
 
         container.innerHTML += `
 
@@ -311,6 +328,8 @@ function renderColleges(list){
 
                 ${button}
 
+                ${removeButton}
+
             </div>
 
         `;
@@ -351,6 +370,68 @@ function renderColleges(list){
             );
 
         });
+
+
+    document
+        .querySelectorAll(".removeBtn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => removePartnership(
+                    button.dataset.id,
+                    button
+                )
+            );
+
+        });
+
+}
+
+
+async function removePartnership(collegeId, button){
+
+    const confirmed = confirm(
+        "Remove this partnership? The college will no longer be available for new recruitment drives."
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Removing...";
+
+    try{
+
+        const response = await fetch(
+            `${API_BASE}/companies/colleges/${collegeId}/partnership`,
+            {
+                method:"DELETE",
+                headers:{
+                    "Authorization":"Bearer " + token
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok){
+            alert(data.message || "Unable to remove partnership.");
+            button.disabled = false;
+            button.textContent = "Remove Partnership";
+            return;
+        }
+
+        await loadColleges();
+
+    }
+    catch(err){
+        console.log(err);
+        alert("Unable to remove partnership.");
+        button.disabled = false;
+        button.textContent = "Remove Partnership";
+    }
 
 }
 
@@ -590,16 +671,15 @@ async function verifyPartnership(
 }
 
 
-document.getElementById(
-    "searchCollege"
-).addEventListener(
-    "input",
-    e => {
+function applyFilters(){
 
         const query =
-            e.target.value
+            document.getElementById("searchCollege").value
                 .toLowerCase()
                 .trim();
+
+        const selectedStatus =
+            document.getElementById("statusFilter").value;
 
 
         const filtered =
@@ -627,11 +707,36 @@ document.getElementById(
                         ).toLowerCase();
 
 
-                    return (
+                    const searchMatches = (
                         name.includes(query) ||
                         code.includes(query) ||
                         location.includes(query)
                     );
+
+                    if(!searchMatches){
+                        return false;
+                    }
+
+                    if(selectedStatus === "ALL"){
+                        return true;
+                    }
+
+                    const status = college.partnershipStatus || "Not Requested";
+                    const initiatedBy = college.initiatedBy;
+
+                    if(selectedStatus === "Approved"){
+                        return status === "Approved";
+                    }
+
+                    if(selectedStatus === "Sent"){
+                        return status === "Verification Required" && initiatedBy === "company";
+                    }
+
+                    if(selectedStatus === "Incoming"){
+                        return status === "Verification Required" && initiatedBy === "college";
+                    }
+
+                    return status === "Not Requested";
 
                 }
             );
@@ -641,7 +746,18 @@ document.getElementById(
             filtered
         );
 
-    }
+}
+
+
+document.getElementById("searchCollege").addEventListener(
+    "input",
+    applyFilters
+);
+
+
+document.getElementById("statusFilter").addEventListener(
+    "change",
+    applyFilters
 );
 
 

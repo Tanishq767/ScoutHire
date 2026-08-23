@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api/students/register";
+const API = "/api/students/register";
 
 async function registerStudent() {
 

@@ -136,13 +136,23 @@
 
             </div>
 
-            <input
-                type="text"
-                id="searchCollege"
-                placeholder="Search colleges..."
-            >
+            <div class="filterControls">
 
-            
+                <input
+                    type="text"
+                    id="searchCollege"
+                    placeholder="Search colleges..."
+                >
+
+                <select id="statusFilter">
+                    <option value="ALL">All Statuses</option>
+                    <option value="Approved">Connected</option>
+                    <option value="Sent">Request Sent</option>
+                    <option value="Incoming">Incoming Request</option>
+                    <option value="Not Requested">Not Connected</option>
+                </select>
+
+            </div>
 
         </div>
 

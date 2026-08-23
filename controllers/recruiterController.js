@@ -4,6 +4,10 @@ const Recruiter = require("../models/recruiterModel");
 const { sendVerificationEmail } = require("../utils/mailSender");
 const jwt = require("jsonwebtoken");
 const Company = require("../models/companyModel");
+const Drive = require("../models/driveModel");
+const Student = require("../models/studentsmodels");
+const DriveCollegeApproval = require("../models/driveCollegeApprovalModel");
+const CollegeCompany = require("../models/collegeCompanyModel");
 
 const registerRecruiter = async (req, res) => {
 
@@ -282,8 +286,54 @@ const loginRecruiter = async (req, res) => {
     }
 };
 
+const deleteRecruiterAccount = async (req, res) => {
+    try {
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ message: "Password confirmation is required." });
+        }
+
+        const validPassword = await bcrypt.compare(password, req.recruiter.password);
+
+        if (!validPassword) {
+            return res.status(401).json({ message: "Incorrect password." });
+        }
+
+        const drives = await Drive.find({ createdBy: req.recruiter._id }).select("_id");
+        const driveIds = drives.map(drive => drive._id);
+
+        if (driveIds.length > 0) {
+            await Student.updateMany(
+                { appliedDrives: { $in: driveIds } },
+                { $pull: { appliedDrives: { $in: driveIds } } }
+            );
+            await DriveCollegeApproval.deleteMany({ driveId: { $in: driveIds } });
+            await Drive.deleteMany({ _id: { $in: driveIds } });
+        }
+
+        await Recruiter.deleteOne({ _id: req.recruiter._id });
+
+        const remainingRecruiters = await Recruiter.countDocuments({
+            companyId: req.recruiter.companyId
+        });
+
+        if (req.recruiter.companyId && remainingRecruiters === 0) {
+            await CollegeCompany.deleteMany({ companyId: req.recruiter.companyId });
+            await Company.deleteOne({ _id: req.recruiter.companyId });
+        }
+
+        return res.json({ message: "Recruiter account deleted successfully." });
+    }
+    catch (err) {
+        console.error("DELETE RECRUITER ACCOUNT ERROR:", err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     registerRecruiter,
     verifyRecruiter,
-    loginRecruiter
+    loginRecruiter,
+    deleteRecruiterAccount
 };

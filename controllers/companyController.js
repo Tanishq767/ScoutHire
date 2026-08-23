@@ -491,12 +491,40 @@ const verifyCollegePartnership =
     };
 
 
+const deleteCollegePartnership = async (req, res) => {
+    try {
+        const recruiter = req.recruiter;
+
+        if (!recruiter.companyId) {
+            return res.status(400).json({
+                message: "Recruiter is not linked to a company."
+            });
+        }
+
+        const relationship = await CollegeCompany.findOneAndDelete({
+            companyId: recruiter.companyId,
+            collegeId: req.params.collegeId
+        });
+
+        if (!relationship) {
+            return res.status(404).json({ message: "Partnership not found." });
+        }
+
+        return res.json({ message: "Partnership removed successfully." });
+    }
+    catch (err) {
+        console.error("DELETE PARTNERSHIP ERROR:", err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
 
     createCompanyForRecruiter,
     getApprovedColleges,
     getColleges,
     requestCollege,
-    verifyCollegePartnership
+    verifyCollegePartnership,
+    deleteCollegePartnership
 
 };

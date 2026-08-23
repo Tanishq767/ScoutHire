@@ -18,6 +18,9 @@ const CollegeCompany =
 const Student =
     require("../models/studentsmodels");
 
+const Drive =
+    require("../models/driveModel");
+
 
 const registerCollege = async (req, res) => {
 
@@ -901,67 +904,143 @@ const getCompaniesForPartnership =
 
         try {
 
-            const companies =
-                await Company.find({})
-                    .select(
-                        "companyName website country"
-                    )
-                    .sort({
-                        companyName: 1
-                    })
-                    .lean();
+            const search =
+                (req.query.search || "").trim();
 
-            const relationships =
-                await CollegeCompany.find({
-                    collegeId:
-                        req.college._id
-                }).lean();
+            const location =
+                (req.query.location || "").trim();
 
-            const relationshipMap =
-                new Map();
+            const status =
+                req.query.status || "ALL";
 
-            relationships.forEach(item => {
+            const allowedStatuses = new Set([
+                "ALL",
+                "Approved",
+                "Sent",
+                "Incoming",
+                "Not Requested"
+            ]);
 
-                relationshipMap.set(
-                    item.companyId.toString(),
-                    {
-                        status:
-                            item.status,
+            if (!allowedStatuses.has(status)) {
 
-                        initiatedBy:
-                            item.initiatedBy
-                    }
-                );
-
-            });
-
-            const result =
-                companies.map(company => {
-
-                    const relationship =
-                        relationshipMap.get(
-                            company._id.toString()
-                        );
-
-                    return {
-
-                        ...company,
-
-                        partnershipStatus:
-                            relationship
-                                ? relationship.status
-                                : "Not Requested",
-
-                        initiatedBy:
-                            relationship
-                                ? relationship.initiatedBy
-                                : null
-
-                    };
-
+                return res.status(400).json({
+                    message: "Invalid partnership status filter."
                 });
 
-            res.json(result);
+            }
+
+            const companyMatch = {};
+
+            if (search) {
+
+                const escapedSearch =
+                    search.replace(
+                        /[.*+?^${}()|[\]\\]/g,
+                        "\\$&"
+                    );
+
+                companyMatch.companyName = {
+                    $regex: escapedSearch,
+                    $options: "i"
+                };
+
+            }
+
+            if (location) {
+
+                companyMatch.country = location;
+
+            }
+
+            const pipeline = [
+                { $match: companyMatch },
+                {
+                    $lookup: {
+                        from: "collegecompanies",
+                        let: { companyId: "$_id" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $and: [
+                                            { $eq: ["$companyId", "$$companyId"] },
+                                            { $eq: ["$collegeId", req.college._id] }
+                                        ]
+                                    }
+                                }
+                            },
+                            { $project: { _id: 0, status: 1, initiatedBy: 1 } }
+                        ],
+                        as: "relationship"
+                    }
+                },
+                {
+                    $set: {
+                        relationship: { $arrayElemAt: ["$relationship", 0] }
+                    }
+                },
+                {
+                    $set: {
+                        partnershipStatus: {
+                            $ifNull: ["$relationship.status", "Not Requested"]
+                        },
+                        initiatedBy: "$relationship.initiatedBy"
+                    }
+                }
+            ];
+
+            if (status === "Approved") {
+
+                pipeline.push({
+                    $match: { partnershipStatus: "Approved" }
+                });
+
+            }
+            else if (status === "Sent") {
+
+                pipeline.push({
+                    $match: {
+                        partnershipStatus: "Verification Required",
+                        initiatedBy: "college"
+                    }
+                });
+
+            }
+            else if (status === "Incoming") {
+
+                pipeline.push({
+                    $match: {
+                        partnershipStatus: "Verification Required",
+                        initiatedBy: "company"
+                    }
+                });
+
+            }
+            else if (status === "Not Requested") {
+
+                pipeline.push({
+                    $match: { partnershipStatus: "Not Requested" }
+                });
+
+            }
+
+            pipeline.push(
+                { $sort: { companyName: 1 } },
+                {
+                    $project: {
+                        companyName: 1,
+                        website: 1,
+                        location: "$country",
+                        partnershipStatus: 1,
+                        initiatedBy: 1
+                    }
+                }
+            );
+
+            const companies =
+                await Company.aggregate(pipeline);
+
+            res.json(companies);
 
         }
         catch (err) {
@@ -971,6 +1050,36 @@ const getCompaniesForPartnership =
             res.status(500).json({
                 message:
                     err.message
+            });
+
+        }
+
+    };
+
+
+const getCompanyPartnershipFilterOptions =
+    async (req, res) => {
+
+        try {
+
+            const locations =
+                await Company.distinct("country", {
+                    country: { $ne: "" }
+                });
+
+            res.json({
+                locations: locations.sort((a, b) =>
+                    a.localeCompare(b)
+                )
+            });
+
+        }
+        catch (err) {
+
+            console.error(err);
+
+            res.status(500).json({
+                message: err.message
             });
 
         }
@@ -1195,6 +1304,59 @@ const verifyCompanyPartnership =
     };
 
 
+const deleteCollegeAccount = async (req, res) => {
+    try {
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ message: "Password confirmation is required." });
+        }
+
+        const validPassword = await bcrypt.compare(password, req.college.password);
+
+        if (!validPassword) {
+            return res.status(401).json({ message: "Incorrect password." });
+        }
+
+        await CollegeCompany.deleteMany({ collegeId: req.college._id });
+        await DriveCollegeApproval.deleteMany({ collegeId: req.college._id });
+        await Student.updateMany(
+            { collegeId: req.college._id },
+            { $set: { collegeId: null } }
+        );
+        await Drive.updateMany(
+            { targetColleges: req.college._id },
+            { $pull: { targetColleges: req.college._id } }
+        );
+        await College.deleteOne({ _id: req.college._id });
+
+        return res.json({ message: "College account deleted successfully." });
+    }
+    catch (err) {
+        console.error("DELETE COLLEGE ACCOUNT ERROR:", err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+const deleteCompanyPartnership = async (req, res) => {
+    try {
+        const relationship = await CollegeCompany.findOneAndDelete({
+            collegeId: req.college._id,
+            companyId: req.params.companyId
+        });
+
+        if (!relationship) {
+            return res.status(404).json({ message: "Partnership not found." });
+        }
+
+        return res.json({ message: "Partnership removed successfully." });
+    }
+    catch (err) {
+        console.error("DELETE COLLEGE PARTNERSHIP ERROR:", err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     registerCollege,
     loginCollege,
@@ -1208,6 +1370,9 @@ module.exports = {
     getCollegeDrives,
     approveDrive,
     getCompaniesForPartnership,
+    getCompanyPartnershipFilterOptions,
     requestCompany,
-    verifyCompanyPartnership
+    verifyCompanyPartnership,
+    deleteCollegeAccount,
+    deleteCompanyPartnership
 };

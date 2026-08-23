@@ -41,5 +41,11 @@ router.post(
     companyController.verifyCollegePartnership
 );
 
+router.delete(
+    "/colleges/:collegeId/partnership",
+    authenticateRecruiter,
+    companyController.deleteCollegePartnership
+);
+
 
 module.exports = router;

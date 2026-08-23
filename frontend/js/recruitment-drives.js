@@ -8,7 +8,7 @@ if (!recruiterName) {
 async function loadDrives(){
 
     try{
-        const response = await fetch("http://localhost:3000/api/drives",{
+        const response = await fetch("/api/drives",{
             headers:{
                 "Authorization":"Bearer " + localStorage.getItem("token")
             }

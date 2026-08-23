@@ -94,3 +94,18 @@ body{
 #logoutBtn:hover{
     background:#B91C1C;
 }
+
+#deleteAccountBtn{
+    margin-top:12px;
+    padding:12px 24px;
+    border:1px solid #FECACA;
+    border-radius:10px;
+    background:#FFF1F2;
+    color:#BE123C;
+    cursor:pointer;
+    font:inherit;
+}
+
+#deleteAccountBtn:hover{
+    background:#FFE4E6;
+}

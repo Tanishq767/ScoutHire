@@ -27,4 +27,6 @@ router.post("/apply/:id", authenticateStudent, studentController.applyToDrive);
 
 router.post("/resume", authenticateStudent, resumeUpload.single("resume"), studentController.uploadResume);
 
+router.delete("/me", authenticateStudent, studentController.deleteStudentAccount);
+
 module.exports = router

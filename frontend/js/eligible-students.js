@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -107,7 +107,7 @@ async function loadPage() {
                 <td>
                     ${item.student.resumeURL
                     ? `<a
-                            href="http://localhost:3000${student.resumeURL}"
+                            href="${student.resumeURL}"
                             target="_blank"
                             class="resumeBtn"
                         >
@@ -224,7 +224,7 @@ async function generateRanking() {
                     ${
                         item.student.resumeURL
                         ? `<a
-                            href="http://localhost:3000${item.student.resumeURL}"
+                            href="${item.student.resumeURL}"
                             target="_blank"
                             class="resumeBtn"
                         >
@@ -379,7 +379,7 @@ async function searchStudent(){
                     ${
                         student.resumeURL
                         ? `<a
-                            href="http://localhost:3000${student.resumeURL}"
+                            href="${student.resumeURL}"
                             target="_blank"
                             class="resumeBtn"
                         >

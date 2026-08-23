@@ -1,6 +1,6 @@
 const loginForm = document.getElementById("loginForm");
 
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 loginForm.addEventListener("submit", async (e) => {
 

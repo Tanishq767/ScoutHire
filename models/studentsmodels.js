@@ -35,6 +35,11 @@ const studentSchema = new mongoose.Schema({
         default: ""
     },
 
+    resumePublicId: {
+        type: String,
+        default: ""
+    },
+
     OAResults: [
         {
             driveId: {

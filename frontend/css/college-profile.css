@@ -1,0 +1,250 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:'Poppins',sans-serif;
+    color:#111827;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(79,70,229,.18),transparent 35%),
+        radial-gradient(circle at 90% 80%,rgba(59,130,246,.15),transparent 35%),
+        #F8FAFC;
+}
+
+.sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    z-index:10;
+    width:250px;
+    padding:35px 20px;
+    display:flex;
+    flex-direction:column;
+    background:#111827;
+}
+
+.brand{
+    margin:0 0 45px;
+    padding:0 15px;
+    color:#4F46E5;
+    font-size:1.8rem;
+    font-weight:700;
+}
+
+.sidebar a{
+    margin-bottom:8px;
+    padding:14px 16px;
+    border-radius:10px;
+    color:#D1D5DB;
+    font-size:.95rem;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    color:#fff;
+    background:#1F2937;
+}
+
+.sidebar a.active{
+    color:#fff;
+    background:linear-gradient(135deg,#4F46E5,#3B82F6);
+}
+
+.main{
+    margin-left:250px;
+    padding:45px 6% 70px;
+}
+
+.pageHeader{
+    margin-bottom:40px;
+}
+
+.eyebrow{
+    margin-bottom:8px;
+    color:#4F46E5;
+    font-size:.82rem;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.pageHeader h1{
+    margin-bottom:8px;
+    font-size:2.4rem;
+}
+
+.pageHeader p:not(.eyebrow),
+.cardHeader p{
+    color:#6B7280;
+}
+
+.profileLayout{
+    display:grid;
+    grid-template-columns:minmax(260px,.72fr) minmax(420px,1.28fr);
+    gap:25px;
+    max-width:1080px;
+}
+
+.identityCard,
+.detailsCard{
+    border:1px solid rgba(255,255,255,.7);
+    border-radius:22px;
+    background:#fff;
+    box-shadow:0 12px 35px rgba(0,0,0,.06);
+}
+
+.dangerCard{
+    grid-column:1 / -1;
+    padding:28px 35px;
+    border:1px solid #FECACA;
+    border-radius:22px;
+    background:#FFF9F9;
+}
+
+.dangerCard h2{
+    margin-bottom:8px;
+    color:#991B1B;
+    font-size:1.25rem;
+}
+
+.dangerCard p{
+    max-width:680px;
+    margin-bottom:18px;
+    color:#6B7280;
+    line-height:1.7;
+    font-size:.9rem;
+}
+
+#deleteAccountBtn{
+    padding:12px 16px;
+    border:0;
+    border-radius:10px;
+    background:#DC2626;
+    color:#fff;
+    font:inherit;
+    font-size:.9rem;
+    font-weight:600;
+    cursor:pointer;
+}
+
+#deleteAccountBtn:hover{background:#B91C1C;}
+
+.identityCard{
+    padding:35px;
+    background:linear-gradient(150deg,#EEF2FF 0%,#fff 72%);
+}
+
+.collegeMark{
+    width:70px;
+    height:70px;
+    margin-bottom:28px;
+    display:grid;
+    place-items:center;
+    border-radius:20px;
+    background:linear-gradient(135deg,#4F46E5,#3B82F6);
+    box-shadow:0 13px 25px rgba(79,70,229,.25);
+    font-size:2rem;
+}
+
+.identityCard h2{
+    margin-bottom:8px;
+    font-size:1.55rem;
+    line-height:1.35;
+}
+
+.location{
+    margin-bottom:24px;
+    color:#6B7280;
+}
+
+.status{
+    display:inline-block;
+    padding:8px 12px;
+    border-radius:999px;
+    color:#4338CA;
+    background:#E0E7FF;
+    font-size:.8rem;
+    font-weight:600;
+}
+
+.status.inactive{
+    color:#B45309;
+    background:#FEF3C7;
+}
+
+.detailsCard{
+    padding:35px;
+}
+
+.cardHeader{
+    margin-bottom:22px;
+}
+
+.cardHeader h2{
+    margin-bottom:5px;
+    font-size:1.35rem;
+}
+
+.cardHeader p{
+    font-size:.9rem;
+}
+
+.detailsList{
+    border-top:1px solid #E5E7EB;
+}
+
+.detailRow{
+    display:grid;
+    grid-template-columns:minmax(130px,.7fr) 1.3fr;
+    gap:20px;
+    padding:18px 0;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.detailRow dt{
+    color:#6B7280;
+    font-size:.9rem;
+}
+
+.detailRow dd{
+    min-width:0;
+    color:#111827;
+    font-size:.92rem;
+    font-weight:500;
+    overflow-wrap:anywhere;
+}
+
+.detailRow a{
+    color:#4F46E5;
+    text-decoration:none;
+}
+
+.detailRow a:hover{
+    text-decoration:underline;
+}
+
+@media(max-width:900px){
+    .profileLayout{grid-template-columns:1fr;}
+}
+
+@media(max-width:750px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        padding:20px;
+    }
+
+    .brand{margin-bottom:20px;}
+    .sidebar a{display:inline-block;}
+    .main{margin-left:0;padding:30px 20px;}
+    .pageHeader h1{font-size:2rem;}
+    .identityCard,.detailsCard,.dangerCard{padding:25px;}
+}
+
+@media(max-width:460px){
+    .detailRow{grid-template-columns:1fr;gap:5px;}
+}

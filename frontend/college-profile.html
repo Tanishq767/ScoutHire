@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoutHire | College Profile</title>
+
+    <link rel="stylesheet" href="css/college-profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <div class="brand">ScoutHire</div>
+
+        <a href="college-dashboard.html">Dashboard</a>
+        <a href="college-companies.html">Companies</a>
+        <a href="college-students.html">Students</a>
+        <a href="college-drives.html">Recruitment Drives</a>
+        <a href="college-profile.html" class="active">Profile</a>
+        <a href="#" id="logoutBtn">Logout</a>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="pageHeader">
+
+            <p class="eyebrow">College Placement Portal</p>
+            <h1>College Profile</h1>
+            <p>Your institution details on ScoutHire.</p>
+
+        </header>
+
+        <section class="profileLayout" aria-live="polite">
+
+            <article class="identityCard">
+
+                <div class="collegeMark" aria-hidden="true">🎓</div>
+
+                <p class="eyebrow">Institution</p>
+                <h2 id="collegeName">Loading college...</h2>
+                <p id="collegeLocation" class="location">—</p>
+
+                <span id="verificationStatus" class="status">Loading</span>
+
+            </article>
+
+            <article class="detailsCard">
+
+                <div class="cardHeader">
+
+                    <div>
+                        <h2>College Details</h2>
+                        <p>Keep these details accurate for company partnerships.</p>
+                    </div>
+
+                </div>
+
+                <dl class="detailsList">
+
+                    <div class="detailRow">
+                        <dt>College code</dt>
+                        <dd id="collegeCode">—</dd>
+                    </div>
+
+                    <div class="detailRow">
+                        <dt>Official email</dt>
+                        <dd><a id="collegeEmail" href="#">—</a></dd>
+                    </div>
+
+                    <div class="detailRow">
+                        <dt>Contact person</dt>
+                        <dd id="contactPerson">—</dd>
+                    </div>
+
+                    <div class="detailRow">
+                        <dt>Phone</dt>
+                        <dd id="collegePhone">—</dd>
+                    </div>
+
+                    <div class="detailRow">
+                        <dt>Website</dt>
+                        <dd><a id="collegeWebsite" href="#" target="_blank" rel="noopener">Not provided</a></dd>
+                    </div>
+
+                </dl>
+
+            </article>
+
+            <article class="dangerCard">
+
+                <h2>Delete College Account</h2>
+                <p>
+                    This permanently removes the college, its partnerships and drive approvals.
+                    Students will be disconnected from the college.
+                </p>
+
+                <button id="deleteAccountBtn" type="button">
+                    Delete College Account
+                </button>
+
+            </article>
+
+        </section>
+
+    </main>
+
+    <script src="js/college-profile.js"></script>
+
+</body>
+
+</html>

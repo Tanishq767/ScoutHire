@@ -1,5 +1,5 @@
 const driveForm = document.getElementById("driveForm");
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 async function loadApprovedColleges() {
 

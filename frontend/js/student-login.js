@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api/students/login";
+const API = "/api/students/login";
 
 async function loginStudent() {
 

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 const token = localStorage.getItem("studentToken");
 
@@ -50,7 +50,7 @@ async function loadProfile(){
                 document.getElementById("resumeLink");
 
             resumeLink.href =
-                "http://localhost:3000" + student.resumeURL;
+                student.resumeURL;
 
             resumeLink.style.display = "inline-block";
         }
@@ -117,6 +117,46 @@ document.getElementById("logoutBtn").addEventListener(
         localStorage.removeItem("studentId");
 
         window.location.href = "student-login.html";
+    }
+);
+
+document.getElementById("deleteAccountBtn").addEventListener(
+    "click",
+    async () => {
+        if(!confirm("Delete your account permanently? This cannot be undone.")){
+            return;
+        }
+
+        const password = prompt("Enter your password to confirm account deletion:");
+
+        if(!password){
+            return;
+        }
+
+        try{
+            const response = await fetch(`${API_BASE}/students/me`, {
+                method:"DELETE",
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + token
+                },
+                body:JSON.stringify({ password })
+            });
+
+            const data = await response.json();
+
+            if(!response.ok){
+                alert(data.message || "Unable to delete account.");
+                return;
+            }
+
+            localStorage.clear();
+            window.location.href = "student-login.html";
+        }
+        catch(err){
+            console.log(err);
+            alert("Unable to delete account.");
+        }
     }
 );
 

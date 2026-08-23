@@ -1,5 +1,5 @@
 const API_BASE =
-    "http://localhost:3000/api";
+    "/api";
 
 
 const token =
@@ -14,16 +14,42 @@ if(!token){
 }
 
 
-let companies = [];
-
-
 async function loadCompanies(){
 
     try{
 
+        const search =
+            document.getElementById(
+                "searchCompany"
+            ).value.trim();
+
+        const location =
+            document.getElementById(
+                "locationFilter"
+            ).value;
+
+        const status =
+            document.getElementById(
+                "statusFilter"
+            ).value;
+
+        const query = new URLSearchParams();
+
+        if(search){
+            query.set("search", search);
+        }
+
+        if(location !== "ALL"){
+            query.set("location", location);
+        }
+
+        if(status !== "ALL"){
+            query.set("status", status);
+        }
+
         const response =
             await fetch(
-                `${API_BASE}/colleges/partnerships/companies`,
+                `${API_BASE}/colleges/partnerships/companies?${query.toString()}`,
                 {
                     headers:{
                         "Authorization":
@@ -32,8 +58,7 @@ async function loadCompanies(){
                 }
             );
 
-
-        companies =
+        const companies =
             await response.json();
 
 
@@ -48,10 +73,7 @@ async function loadCompanies(){
 
         }
 
-
-        populateLocationFilter();
-
-        applyFilters();
+        renderCompanies(companies);
 
     }
     catch(err){
@@ -67,44 +89,31 @@ async function loadCompanies(){
 }
 
 
-function populateLocationFilter(){
+async function loadFilterOptions(){
 
-    const locationFilter =
-        document.getElementById(
-            "locationFilter"
-        );
+    try{
 
+        const response =
+            await fetch(
+                `${API_BASE}/colleges/partnerships/companies/filter-options`,
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
 
-    const locations =
-        [
-            ...new Set(
+        const data = await response.json();
 
-                companies
+        if(!response.ok){
+            throw new Error(data.message);
+        }
 
-                    .map(
-                        company =>
-                            (
-                                company.location ||
-                                ""
-                            ).trim()
-                    )
+        const locationFilter =
+            document.getElementById("locationFilter");
 
-                    .filter(
-                        location =>
-                            location !== ""
-                    )
-
-            )
-        ];
-
-
-    locations.sort(
-        (a,b) =>
-            a.localeCompare(b)
-    );
-
-
-    locationFilter.innerHTML = `
+        locationFilter.innerHTML = `
 
         <option value="ALL">
             All Locations
@@ -113,7 +122,7 @@ function populateLocationFilter(){
     `;
 
 
-    locations.forEach(
+        data.locations.forEach(
         location => {
 
             locationFilter.innerHTML += `
@@ -125,190 +134,16 @@ function populateLocationFilter(){
             `;
 
         }
-    );
-
-}
-
-
-function applyFilters(){
-
-    const searchInput =
-        document.getElementById(
-            "searchCompany"
         );
 
+    }
+    catch(err){
 
-    const locationFilter =
-        document.getElementById(
-            "locationFilter"
-        );
+        console.log(err);
 
+        alert("Unable to load location filters.");
 
-    const statusFilter =
-        document.getElementById(
-            "statusFilter"
-        );
-
-
-    const search =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
-
-    const selectedLocation =
-        locationFilter.value;
-
-
-    const selectedStatus =
-        statusFilter.value;
-
-
-    const filtered =
-        companies.filter(
-            company => {
-
-                const companyName =
-                    (
-                        company.companyName ||
-                        ""
-                    )
-                    .toLowerCase();
-
-
-                const searchMatches =
-                    companyName.includes(
-                        search
-                    );
-
-
-                if(!searchMatches){
-
-                    return false;
-
-                }
-
-
-                if(
-                    selectedLocation !==
-                    "ALL"
-                ){
-
-                    const location =
-                        (
-                            company.location ||
-                            ""
-                        ).trim();
-
-
-                    if(
-                        location !==
-                        selectedLocation
-                    ){
-
-                        return false;
-
-                    }
-
-                }
-
-
-                if(
-                    selectedStatus !==
-                    "ALL"
-                ){
-
-                    const partnershipStatus =
-                        company.partnershipStatus ||
-                        "Not Requested";
-
-
-                    const initiatedBy =
-                        company.initiatedBy;
-
-
-                    let matchesStatus =
-                        false;
-
-
-                    if(
-                        selectedStatus ===
-                        "Approved"
-                    ){
-
-                        matchesStatus =
-                            partnershipStatus ===
-                            "Approved";
-
-                    }
-
-
-                    else if(
-                        selectedStatus ===
-                        "Sent"
-                    ){
-
-                        matchesStatus =
-
-                            partnershipStatus ===
-                            "Verification Required"
-
-                            &&
-
-                            initiatedBy ===
-                            "college";
-
-                    }
-
-
-                    else if(
-                        selectedStatus ===
-                        "Incoming"
-                    ){
-
-                        matchesStatus =
-
-                            partnershipStatus ===
-                            "Verification Required"
-
-                            &&
-
-                            initiatedBy ===
-                            "company";
-
-                    }
-
-
-                    else if(
-                        selectedStatus ===
-                        "Not Requested"
-                    ){
-
-                        matchesStatus =
-                            partnershipStatus ===
-                            "Not Requested";
-
-                    }
-
-
-                    if(!matchesStatus){
-
-                        return false;
-
-                    }
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    renderCompanies(
-        filtered
-    );
+    }
 
 }
 
@@ -351,6 +186,7 @@ function renderCompanies(list){
 
 
         let action = "";
+        let removeAction = "";
 
 
         if(
@@ -436,6 +272,22 @@ function renderCompanies(list){
                     data-id="${company._id}">
 
                     Request Partnership
+
+                </button>
+
+            `;
+
+        }
+
+        if(status !== "Not Requested"){
+
+            removeAction = `
+
+                <button
+                    class="removeBtn"
+                    data-id="${company._id}">
+
+                    Remove Partnership
 
                 </button>
 
@@ -532,6 +384,8 @@ function renderCompanies(list){
 
                 ${action}
 
+                ${removeAction}
+
             </div>
 
         `;
@@ -575,6 +429,68 @@ function renderCompanies(list){
             );
 
         });
+
+
+    document
+        .querySelectorAll(".removeBtn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => removePartnership(
+                    button.dataset.id,
+                    button
+                )
+            );
+
+        });
+
+}
+
+
+async function removePartnership(companyId, button){
+
+    const confirmed = confirm(
+        "Remove this partnership? The company will no longer be able to create new drives for your college."
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Removing...";
+
+    try{
+
+        const response = await fetch(
+            `${API_BASE}/colleges/partnerships/companies/${companyId}`,
+            {
+                method:"DELETE",
+                headers:{
+                    "Authorization":"Bearer " + token
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok){
+            alert(data.message || "Unable to remove partnership.");
+            button.disabled = false;
+            button.textContent = "Remove Partnership";
+            return;
+        }
+
+        await loadCompanies();
+
+    }
+    catch(err){
+        console.log(err);
+        alert("Unable to remove partnership.");
+        button.disabled = false;
+        button.textContent = "Remove Partnership";
+    }
 
 }
 
@@ -824,11 +740,23 @@ async function requestPartnership(
 }
 
 
+let searchDelay;
+
+
 document.getElementById(
     "searchCompany"
 ).addEventListener(
     "input",
-    applyFilters
+    () => {
+
+        clearTimeout(searchDelay);
+
+        searchDelay = setTimeout(
+            loadCompanies,
+            300
+        );
+
+    }
 );
 
 
@@ -836,7 +764,7 @@ document.getElementById(
     "locationFilter"
 ).addEventListener(
     "change",
-    applyFilters
+    loadCompanies
 );
 
 
@@ -844,7 +772,7 @@ document.getElementById(
     "statusFilter"
 ).addEventListener(
     "change",
-    applyFilters
+    loadCompanies
 );
 
 
@@ -874,4 +802,13 @@ document.getElementById(
 );
 
 
-loadCompanies();
+async function initializePage(){
+
+    await loadFilterOptions();
+
+    loadCompanies();
+
+}
+
+
+initializePage();

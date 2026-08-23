@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const { sendVerificationEmail } = require("../utils/mailSender");
+const Drive = require("../models/driveModel");
+const { cloudinary, isCloudinaryEnabled } = require("../utils/cloudinary");
 
 const getStudents = async(req,res) => {
     try{
@@ -681,9 +683,26 @@ const uploadResume = async (req, res) => {
             });
         }
 
-        const resumeURL = `/uploads/resumes/${req.file.filename}`;
+        if (req.student.resumePublicId && isCloudinaryEnabled) {
+            await cloudinary.uploader.destroy(
+                req.student.resumePublicId,
+                { resource_type: "raw" }
+            );
+        }
+
+        const isCloudResume =
+            isCloudinaryEnabled &&
+            req.file.path &&
+            req.file.path.startsWith("http");
+
+        const resumeURL = isCloudResume
+            ? req.file.path
+            : `/uploads/resumes/${req.file.filename}`;
 
         req.student.resumeURL = resumeURL;
+        req.student.resumePublicId = isCloudResume
+            ? req.file.filename
+            : "";
 
         await req.student.save();
 
@@ -701,6 +720,63 @@ const uploadResume = async (req, res) => {
     }
 };
 
+const deleteStudentAccount = async (req, res) => {
+    try {
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ message: "Password confirmation is required." });
+        }
+
+        const validPassword = await bcrypt.compare(password, req.student.password);
+
+        if (!validPassword) {
+            return res.status(401).json({ message: "Incorrect password." });
+        }
+
+        await Drive.updateMany(
+            {
+                $or: [
+                    { appliedStudents: req.student._id },
+                    { interviewCandidates: req.student._id },
+                    { shortlistedStudents: req.student.USN }
+                ]
+            },
+            {
+                $pull: {
+                    appliedStudents: req.student._id,
+                    interviewCandidates: req.student._id,
+                    shortlistedStudents: req.student.USN
+                }
+            }
+        );
+
+        if (req.student.resumePublicId && isCloudinaryEnabled) {
+            await cloudinary.uploader.destroy(
+                req.student.resumePublicId,
+                { resource_type: "raw" }
+            );
+        }
+        else {
+            const resumeFile = req.student.resumeURL
+                ? `uploads/resumes/${req.student.resumeURL.split("/").pop()}`
+                : null;
+
+            if (resumeFile && fs.existsSync(resumeFile)) {
+                fs.unlinkSync(resumeFile);
+            }
+        }
+
+        await Student.deleteOne({ _id: req.student._id });
+
+        return res.json({ message: "Student account deleted successfully." });
+    }
+    catch (err) {
+        console.error("DELETE STUDENT ACCOUNT ERROR:", err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     getStudents,
     getStudentbyUSN,
@@ -712,5 +788,6 @@ module.exports = {
     getLoggedInStudent,
     getEligibleDrives,
     applyToDrive,
-    uploadResume
+    uploadResume,
+    deleteStudentAccount
 };

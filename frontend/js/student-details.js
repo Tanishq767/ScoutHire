@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 const params = new URLSearchParams(
     window.location.search
@@ -160,7 +160,7 @@ function renderStudent(student){
                     student.resumeURL
                     ? `
                         <a
-                            href="http://localhost:3000${student.resumeURL}"
+                            href="${student.resumeURL}"
                             target="_blank"
                             class="resumeBtn">
 

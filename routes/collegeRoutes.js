@@ -92,6 +92,12 @@ router.get(
     collegeController.getCompaniesForPartnership
 );
 
+router.get(
+    "/partnerships/companies/filter-options",
+    authenticateCollege,
+    collegeController.getCompanyPartnershipFilterOptions
+);
+
 router.post(
     "/partnerships/companies/:companyId/request",
     authenticateCollege,
@@ -102,6 +108,18 @@ router.post(
     "/partnerships/companies/:companyId/verify",
     authenticateCollege,
     collegeController.verifyCompanyPartnership
+);
+
+router.delete(
+    "/partnerships/companies/:companyId",
+    authenticateCollege,
+    collegeController.deleteCompanyPartnership
+);
+
+router.delete(
+    "/me",
+    authenticateCollege,
+    collegeController.deleteCollegeAccount
 );
 
 module.exports = router;

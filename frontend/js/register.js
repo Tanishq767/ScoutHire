@@ -1,5 +1,5 @@
 const registerForm = document.getElementById("registerForm");
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = "/api";
 
 registerForm.addEventListener("submit", async (e) => {
 
