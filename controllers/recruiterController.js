@@ -129,7 +129,6 @@ const registerRecruiter = async (req, res) => {
         }
 
         const newRecruiter = new Recruiter({
-
             recruiterName,
             companyName: company.companyName,
             email,
@@ -137,7 +136,6 @@ const registerRecruiter = async (req, res) => {
             verificationToken,
             verificationTokenExpiry,
             companyId: company._id
-
         });
 
         await newRecruiter.save();

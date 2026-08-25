@@ -423,7 +423,7 @@ const rankEligibleStudents = async (req, res) => {
             Math.max(
                 ...eligibleStudents.map(s =>
                     s.CPRating &&
-                    s.CPRating.length
+                        s.CPRating.length
                         ? Math.max(
                             ...s.CPRating.map(
                                 cp => cp.rating
@@ -459,7 +459,7 @@ const rankEligibleStudents = async (req, res) => {
 
                 return maxCGPA
                     ? student.CGPA /
-                        maxCGPA
+                    maxCGPA
                     : 0;
 
             }
@@ -486,7 +486,7 @@ const rankEligibleStudents = async (req, res) => {
 
                 return maxProjects
                     ? (student.projects || []).length /
-                        maxProjects
+                    maxProjects
                     : 0;
 
             }
@@ -496,7 +496,7 @@ const rankEligibleStudents = async (req, res) => {
 
                 return maxInternships
                     ? (student.internships || []).length /
-                        maxInternships
+                    maxInternships
                     : 0;
 
             }
@@ -788,16 +788,11 @@ const uploadOAResults = async (req, res) => {
     try {
 
         if (!req.file) {
-
             return res.status(400).json({
-
                 message:
                     "Please upload an OA result CSV file."
-
             });
-
         }
-
 
         const drive =
             await Drive.findOne({
@@ -812,7 +807,7 @@ const uploadOAResults = async (req, res) => {
 
             fs.unlink(
                 req.file.path,
-                () => {}
+                () => { }
             );
 
             return res.status(404).json({
@@ -830,7 +825,7 @@ const uploadOAResults = async (req, res) => {
 
             fs.unlink(
                 req.file.path,
-                () => {}
+                () => { }
             );
 
             return res.status(400).json({
@@ -870,311 +865,460 @@ const uploadOAResults = async (req, res) => {
             req.file.path
         )
 
-        .pipe(
-            csv()
-        )
+            .pipe(
+                csv()
+            )
 
-        .on(
-            "headers",
-            headers => {
+            .on(
+                "headers",
+                headers => {
 
-                const missingColumns =
-                    requiredColumns.filter(
-                        column =>
-                            !headers.includes(
-                                column
-                            )
-                    );
+                    const missingColumns =
+                        requiredColumns.filter(
+                            column =>
+                                !headers.includes(
+                                    column
+                                )
+                        );
 
 
-                if (
-                    missingColumns.length > 0
-                ) {
+                    if (
+                        missingColumns.length > 0
+                    ) {
+
+                        headersValidated =
+                            false;
+
+                        return res.status(
+                            400
+                        ).json({
+
+                            message:
+                                "Invalid OA CSV format.",
+
+                            missingColumns
+
+                        });
+
+                    }
+
 
                     headersValidated =
-                        false;
-
-                    return res.status(
-                        400
-                    ).json({
-
-                        message:
-                            "Invalid OA CSV format.",
-
-                        missingColumns
-
-                    });
+                        true;
 
                 }
+            )
 
+            .on(
+                "data",
+                data => {
 
-                headersValidated =
-                    true;
+                    if (!headersValidated) {
+                        return;
+                    }
 
-            }
-        )
+                    results.push(data);
 
-        .on(
-            "data",
-            data => {
-
-                if (!headersValidated) {
-                    return;
                 }
+            )
 
-                results.push(data);
+            .on(
+                "end",
+                async () => {
 
-            }
-        )
+                    try {
 
-        .on(
-            "end",
-            async () => {
-
-                try {
-
-                    fs.unlink(
-                        req.file.path,
-                        () => {}
-                    );
+                        fs.unlink(
+                            req.file.path,
+                            () => { }
+                        );
 
 
-                    if (
-                        results.length === 0
-                    ) {
+                        if (
+                            results.length === 0
+                        ) {
+
+                            return res.status(
+                                400
+                            ).json({
+
+                                message:
+                                    "CSV contains no valid records."
+
+                            });
+
+                        }
+
+
+                        const errors = [];
+
+                        const validResults = [];
+
+
+                        for (
+                            let i = 0;
+                            i < results.length;
+                            i++
+                        ) {
+
+                            const row =
+                                results[i];
+
+
+                            const rowNumber =
+                                i + 2;
+
+
+                            const USN =
+                                row.USN?.trim();
+
+
+                            const name =
+                                row.Name?.trim();
+
+
+                            const email =
+                                row.Email?.trim();
+
+
+                            const timestamp =
+                                new Date(
+                                    row.SubmissionTimestamp
+                                );
+
+
+                            const totalScore =
+                                Number(
+                                    row.TotalScore
+                                );
+
+
+                            const totalMarks =
+                                Number(
+                                    row.TotalMarks
+                                );
+
+
+                            const testsPassed =
+                                Number(
+                                    row.TestsPassed
+                                );
+
+
+                            const testsTotal =
+                                Number(
+                                    row.TestsTotal
+                                );
+
+
+                            const integrityScore =
+                                Number(
+                                    row.IntegrityScore
+                                );
+
+
+                            const integrityFlags =
+                                Number(
+                                    row.IntegrityFlags
+                                );
+
+
+                            if (!USN) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Missing USN.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (!name) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Missing Name.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (!email) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Missing Email.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (
+                                isNaN(
+                                    timestamp.getTime()
+                                )
+                            ) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Invalid submission timestamp.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (
+                                isNaN(totalScore) ||
+                                isNaN(totalMarks) ||
+                                totalMarks <= 0
+                            ) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Invalid score.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (
+                                isNaN(testsPassed) ||
+                                isNaN(testsTotal) ||
+                                testsTotal <= 0 ||
+                                testsPassed < 0 ||
+                                testsPassed > testsTotal
+                            ) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Invalid test case values.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (
+                                isNaN(integrityScore) ||
+                                integrityScore < 0 ||
+                                integrityScore > 100
+                            ) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Invalid integrity score.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            if (
+                                isNaN(integrityFlags) ||
+                                integrityFlags < 0
+                            ) {
+
+                                errors.push(
+                                    `Row ${rowNumber}: Invalid integrity flags.`
+                                );
+
+                                continue;
+
+                            }
+
+
+                            validResults.push({
+
+                                USN,
+
+                                name,
+
+                                email,
+
+                                submissionTimestamp:
+                                    timestamp,
+
+                                totalScore,
+
+                                totalMarks,
+
+                                testsPassed,
+
+                                testsTotal,
+
+                                integrityScore,
+
+                                integrityFlags
+
+                            });
+
+                        }
+
+
+                        if (
+                            validResults.length === 0
+                        ) {
+
+                            return res.status(
+                                400
+                            ).json({
+
+                                message:
+                                    "No valid OA records found.",
+
+                                errors
+
+                            });
+
+                        }
+
+
+                        const applicants =
+                            await Student.find({
+
+                                _id: {
+                                    $in:
+                                        drive.appliedStudents
+                                }
+
+                            }).select("USN");
+
+
+                        const applicantUSNs =
+                            new Set();
+
+
+                        applicants.forEach(
+                            student => {
+
+                                applicantUSNs.add(
+                                    student.USN
+                                );
+
+                            }
+                        );
+
+
+                        let updated = 0;
+
+                        let skipped = 0;
+
+
+                        for (
+                            const result
+                            of validResults
+                        ) {
+
+                            console.log(
+                                "CSV USN:",
+                                JSON.stringify(result.USN)
+                            );
+
+                            console.log(
+                                "Applicant USNs:",
+                                [...applicantUSNs].map(
+                                    usn => JSON.stringify(usn)
+                                )
+                            );
+
+                            console.log(
+                                "Drive appliedStudents:",
+                                drive.appliedStudents
+                            );
+
+                            if (
+                                !applicantUSNs.has(
+                                    result.USN
+                                )
+                            ) {
+
+                                skipped++;
+
+                                continue;
+
+                            }
+
+
+                            await Student.updateOne(
+
+                                {
+                                    USN:
+                                        result.USN
+                                },
+
+                                {
+                                    $push: {
+
+                                        OAResults: {
+
+                                            driveId:
+                                                drive._id,
+
+                                            company:
+                                                drive.companyName,
+
+                                            name:
+                                                result.name,
+
+                                            email:
+                                                result.email,
+
+                                            submissionTimestamp:
+                                                result.submissionTimestamp,
+
+                                            totalScore:
+                                                result.totalScore,
+
+                                            totalMarks:
+                                                result.totalMarks,
+
+                                            testsPassed:
+                                                result.testsPassed,
+
+                                            testsTotal:
+                                                result.testsTotal,
+
+                                            integrityScore:
+                                                result.integrityScore,
+
+                                            integrityFlags:
+                                                result.integrityFlags
+
+                                        }
+
+                                    }
+
+                                }
+
+                            );
+
+
+                            updated++;
+
+                        }
+
 
                         return res.status(
-                            400
+                            200
                         ).json({
 
                             message:
-                                "CSV contains no valid records."
+                                "OA results uploaded successfully.",
 
-                        });
+                            totalRecords:
+                                results.length,
 
-                    }
+                            validRecords:
+                                validResults.length,
 
+                            updated,
 
-                    const errors = [];
-
-                    const validResults = [];
-
-
-                    for (
-                        let i = 0;
-                        i < results.length;
-                        i++
-                    ) {
-
-                        const row =
-                            results[i];
-
-
-                        const rowNumber =
-                            i + 2;
-
-
-                        const USN =
-                            row.USN?.trim();
-
-
-                        const name =
-                            row.Name?.trim();
-
-
-                        const email =
-                            row.Email?.trim();
-
-
-                        const timestamp =
-                            new Date(
-                                row.SubmissionTimestamp
-                            );
-
-
-                        const totalScore =
-                            Number(
-                                row.TotalScore
-                            );
-
-
-                        const totalMarks =
-                            Number(
-                                row.TotalMarks
-                            );
-
-
-                        const testsPassed =
-                            Number(
-                                row.TestsPassed
-                            );
-
-
-                        const testsTotal =
-                            Number(
-                                row.TestsTotal
-                            );
-
-
-                        const integrityScore =
-                            Number(
-                                row.IntegrityScore
-                            );
-
-
-                        const integrityFlags =
-                            Number(
-                                row.IntegrityFlags
-                            );
-
-
-                        if (!USN) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Missing USN.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (!name) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Missing Name.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (!email) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Missing Email.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (
-                            isNaN(
-                                timestamp.getTime()
-                            )
-                        ) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Invalid submission timestamp.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (
-                            isNaN(totalScore) ||
-                            isNaN(totalMarks) ||
-                            totalMarks <= 0
-                        ) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Invalid score.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (
-                            isNaN(testsPassed) ||
-                            isNaN(testsTotal) ||
-                            testsTotal <= 0 ||
-                            testsPassed < 0 ||
-                            testsPassed > testsTotal
-                        ) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Invalid test case values.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (
-                            isNaN(integrityScore) ||
-                            integrityScore < 0 ||
-                            integrityScore > 100
-                        ) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Invalid integrity score.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        if (
-                            isNaN(integrityFlags) ||
-                            integrityFlags < 0
-                        ) {
-
-                            errors.push(
-                                `Row ${rowNumber}: Invalid integrity flags.`
-                            );
-
-                            continue;
-
-                        }
-
-
-                        validResults.push({
-
-                            USN,
-
-                            name,
-
-                            email,
-
-                            submissionTimestamp:
-                                timestamp,
-
-                            totalScore,
-
-                            totalMarks,
-
-                            testsPassed,
-
-                            testsTotal,
-
-                            integrityScore,
-
-                            integrityFlags
-
-                        });
-
-                    }
-
-
-                    if (
-                        validResults.length === 0
-                    ) {
-
-                        return res.status(
-                            400
-                        ).json({
-
-                            message:
-                                "No valid OA records found.",
+                            skipped,
 
                             errors
 
@@ -1182,173 +1326,41 @@ const uploadOAResults = async (req, res) => {
 
                     }
 
+                    catch (err) {
 
-                    const applicants =
-                        await Student.find({
-
-                            _id: {
-                                $in:
-                                    drive.appliedStudents
-                            }
-
-                        }).select("USN");
-
-
-                    const applicantUSNs =
-                        new Set();
-
-
-                    applicants.forEach(
-                        student => {
-
-                            applicantUSNs.add(
-                                student.USN
-                            );
-
-                        }
-                    );
-
-
-                    let updated = 0;
-
-                    let skipped = 0;
-
-
-                    for (
-                        const result
-                        of validResults
-                    ) {
-
-                        if (
-                            !applicantUSNs.has(
-                                result.USN
-                            )
-                        ) {
-
-                            skipped++;
-
-                            continue;
-
-                        }
-
-
-                        await Student.updateOne(
-
-                            {
-                                USN:
-                                    result.USN
-                            },
-
-                            {
-                                $push: {
-
-                                    OAResults: {
-
-                                        driveId:
-                                            drive._id,
-
-                                        company:
-                                            drive.companyName,
-
-                                        name:
-                                            result.name,
-
-                                        email:
-                                            result.email,
-
-                                        submissionTimestamp:
-                                            result.submissionTimestamp,
-
-                                        totalScore:
-                                            result.totalScore,
-
-                                        totalMarks:
-                                            result.totalMarks,
-
-                                        testsPassed:
-                                            result.testsPassed,
-
-                                        testsTotal:
-                                            result.testsTotal,
-
-                                        integrityScore:
-                                            result.integrityScore,
-
-                                        integrityFlags:
-                                            result.integrityFlags
-
-                                    }
-
-                                }
-
-                            }
-
+                        console.error(
+                            "OA RESULT PROCESSING ERROR:",
+                            err
                         );
 
-
-                        updated++;
+                        return res.status(
+                            500
+                        ).json({
+                            message:
+                                err.message
+                        });
 
                     }
 
-
-                    return res.status(
-                        200
-                    ).json({
-
-                        message:
-                            "OA results uploaded successfully.",
-
-                        totalRecords:
-                            results.length,
-
-                        validRecords:
-                            validResults.length,
-
-                        updated,
-
-                        skipped,
-
-                        errors
-
-                    });
-
                 }
+            )
 
-                catch (err) {
+            .on(
+                "error",
+                err => {
 
                     console.error(
-                        "OA RESULT PROCESSING ERROR:",
+                        "CSV READ ERROR:",
                         err
                     );
 
-                    return res.status(
-                        500
-                    ).json({
-                        message:
-                            err.message
-                    });
+                    fs.unlink(
+                        req.file.path,
+                        () => { }
+                    );
 
                 }
-
-            }
-        )
-
-        .on(
-            "error",
-            err => {
-
-                console.error(
-                    "CSV READ ERROR:",
-                    err
-                );
-
-                fs.unlink(
-                    req.file.path,
-                    () => {}
-                );
-
-            }
-        );
+            );
 
     }
 
@@ -1363,7 +1375,7 @@ const uploadOAResults = async (req, res) => {
 
             fs.unlink(
                 req.file.path,
-                () => {}
+                () => { }
             );
 
         }
@@ -1864,43 +1876,28 @@ const getInterviewCandidates = async (req, res) => {
 const sendInterviewInvitations = async (req, res) => {
 
     try {
-
         const drive =
             await Drive.findOne({
-
-                _id:
-                    req.params.id,
-
-                createdBy:
-                    req.recruiter._id
-
+                _id: req.params.id,
             });
 
 
         if (!drive) {
-
             return res.status(404).json({
                 message:
                     "Drive not found."
             });
-
         }
-
 
         if (
             !drive.interviewCandidates ||
             drive.interviewCandidates.length === 0
         ) {
-
             return res.status(400).json({
-
                 message:
                     "No interview candidates selected."
-
             });
-
         }
-
 
         if (
             !drive.interviewDetails ||
@@ -1908,95 +1905,63 @@ const sendInterviewInvitations = async (req, res) => {
             !drive.interviewDetails.time ||
             !drive.interviewDetails.location
         ) {
-
             return res.status(400).json({
-
                 message:
                     "Please save interview details before sending invitations."
-
             });
-
         }
 
-
         if (drive.interviewEmailsSent) {
-
             return res.status(400).json({
-
                 message:
                     "Interview invitations have already been sent."
-
             });
-
         }
 
 
         const students =
             await Student.find({
-
-                _id: {
-                    $in:
-                        drive.interviewCandidates
-                }
-
+                _id: { $in: drive.interviewCandidates }
             }).select(
                 "name email"
             );
 
-
         if (students.length === 0) {
-
             return res.status(404).json({
-
                 message:
                     "No selected students were found."
-
             });
-
         }
 
-
         const failedEmails = [];
-
 
         for (
             const student
             of students
         ) {
-
             try {
 
                 await sendInterviewEmail({
-
                     email:
                         student.email,
-
                     studentName:
                         student.name,
-
                     companyName:
                         drive.companyName,
-
                     jobTitle:
                         drive.jobTitle,
-
                     interviewDate:
                         drive.interviewDetails.date,
-
                     interviewTime:
                         drive.interviewDetails.time,
-
                     location:
                         drive.interviewDetails.location,
-
                     requiredDocuments:
                         drive.interviewDetails
                             .requiredDocuments,
-
                     additionalInstructions:
                         drive.interviewDetails
                             .additionalInstructions
-
                 });
 
             }
