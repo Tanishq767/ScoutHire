@@ -38,26 +38,18 @@ async function loadColleges(){
                 }
             );
 
-
         const data =
             await response.json();
 
-
         if(!response.ok){
-
             alert(
                 data.message ||
                 "Unable to load colleges."
             );
-
             return;
-
         }
 
-
-        colleges =
-            data;
-
+        colleges = data;
 
         updateStats();
 
@@ -163,38 +155,28 @@ function renderColleges(list){
             college.partnershipStatus ||
             "Not Requested";
 
-
         const initiatedBy =
             college.initiatedBy;
-
 
         let button = "";
         let removeButton = "";
 
-
         let statusText = "";
-
 
         if(status === "Approved"){
 
             statusText =
-                "✓ Partnership Approved";
-
-
+                "Partnership Approved";
             button = `
-
                 <button
                     class="statusBtn approved"
                     disabled>
 
-                    ✓ Partnership Approved
+                    Partnership Approved
 
                 </button>
-
             `;
-
         }
-
 
         else if(
             status ===
@@ -204,7 +186,6 @@ function renderColleges(list){
 
             statusText =
                 "Partnership Request Received";
-
 
             button = `
 
@@ -220,7 +201,6 @@ function renderColleges(list){
 
         }
 
-
         else if(
             status ===
             "Verification Required" &&
@@ -229,7 +209,6 @@ function renderColleges(list){
 
             statusText =
                 "Verification Required";
-
 
             button = `
 
@@ -250,7 +229,6 @@ function renderColleges(list){
 
             statusText =
                 "Not Connected";
-
 
             button = `
 
@@ -559,38 +537,25 @@ async function requestPartnership(
 
 }
 
-
-async function verifyPartnership(
-    collegeId,
-    button
-){
+async function verifyPartnership(collegeId,button){
 
     const verificationCode =
-        prompt(
-            "Enter the verification code agreed upon with the college:"
-        );
-
+        prompt("Enter the verification code agreed upon with the college:");
 
     if(
         !verificationCode ||
         !verificationCode.trim()
     ){
-
         return;
-
     }
-
 
     button.disabled =
         true;
 
-
     button.textContent =
         "Verifying...";
 
-
     try{
-
         const response =
             await fetch(
                 `${API_BASE}/companies/colleges/${collegeId}/verify-partnership`,
@@ -641,15 +606,11 @@ async function verifyPartnership(
             return;
 
         }
-
-
         alert(
             "Partnership verified successfully!"
         );
 
-
         await loadColleges();
-
     }
     catch(err){
 
@@ -659,13 +620,11 @@ async function verifyPartnership(
             "Unable to verify partnership."
         );
 
-
         button.disabled =
             false;
 
         button.textContent =
             "Verify Partnership";
-
     }
 
 }

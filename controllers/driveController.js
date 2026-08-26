@@ -1974,19 +1974,15 @@ const sendInterviewInvitations = async (req, res) => {
                 );
 
                 failedEmails.push({
-
                     email:
                         student.email,
-
                     name:
                         student.name
-
                 });
 
             }
 
         }
-
 
         if (
             failedEmails.length > 0

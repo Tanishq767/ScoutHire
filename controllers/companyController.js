@@ -10,7 +10,6 @@ const College =
 const CollegeCompany =
     require("../models/collegeCompanyModel");
 
-
 const createCompanyForRecruiter =
     async (req, res) => {
 
@@ -97,12 +96,10 @@ const getApprovedColleges =
     async (req, res) => {
 
         try {
-
             const recruiter =
                 req.recruiter;
 
             if (!recruiter.companyId) {
-
                 return res.status(400).json({
                     message:
                         "Recruiter is not linked to a company."
@@ -157,13 +154,11 @@ const getColleges = async (req, res) => {
         const recruiter =
             await Recruiter.findById(req.recruiter._id);
 
-        if (!recruiter || !recruiter.companyId) {
-
+        if (!recruiter.companyId) {
             return res.status(400).json({
                 message:
                     "Recruiter is not linked to a company."
             });
-
         }
 
         const colleges =
@@ -183,10 +178,8 @@ const getColleges = async (req, res) => {
                     recruiter.companyId
             }).lean();
 
-
         const relationshipMap =
             new Map();
-
 
         relationships.forEach(item => {
 
@@ -209,11 +202,8 @@ const getColleges = async (req, res) => {
                         college._id.toString()
                     );
 
-
                 return {
-
                     ...college,
-
                     partnershipStatus:
                         relationship
                             ? relationship.status
@@ -223,14 +213,9 @@ const getColleges = async (req, res) => {
                         relationship
                             ? relationship.initiatedBy
                             : null
-
                 };
-
             });
-
-
         res.json(result);
-
     }
     catch (err) {
 
@@ -255,7 +240,7 @@ const requestCollege = async (req, res) => {
             );
 
 
-        if (!recruiter || !recruiter.companyId) {
+        if (!recruiter.companyId) {
 
             return res.status(400).json({
                 message:
