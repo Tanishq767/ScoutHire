@@ -42,11 +42,8 @@ const driveCollegeApprovalSchema =
         },
 
         approvedAt: {
-
             type:Date,
-
             default:null
-
         }
 
     },{

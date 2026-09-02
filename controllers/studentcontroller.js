@@ -338,7 +338,6 @@ const getEligibleDrives = async (req, res) => {
 
         const drives =
             await Drive.find({
-
                 _id: {
                     $in:
                         approvedDriveIds

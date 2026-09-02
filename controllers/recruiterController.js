@@ -13,8 +13,6 @@ const registerRecruiter = async (req, res) => {
 
     try {
 
-        console.log("1. Register request received");
-
         const { recruiterName, companyName, email, password } = req.body;
 
         const existingRecruiter = await Recruiter.findOne({ email });
